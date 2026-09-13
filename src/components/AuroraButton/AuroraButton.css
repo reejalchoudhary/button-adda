@@ -1,0 +1,331 @@
+.button-adda-aurora {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: min(var(--aurora-width), 100%);
+  height: var(--aurora-height);
+  min-width: 0;
+  min-height: 0;
+  padding: 0 24px;
+
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--aurora-color) 40%,
+      transparent
+    );
+
+  border-radius: var(--aurora-radius);
+  background: #070914;
+  color: var(--aurora-text-color);
+
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+
+  text-align: center;
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  overflow: hidden;
+  isolation: isolate;
+  box-sizing: border-box;
+
+  box-shadow:
+    0 0 calc(30px * var(--aurora-intensity))
+      color-mix(
+        in srgb,
+        var(--aurora-color) 27%,
+        transparent
+      ),
+    inset 0 0 calc(20px * var(--aurora-intensity))
+      color-mix(
+        in srgb,
+        var(--aurora-color) 10%,
+        transparent
+      );
+
+  transition:
+    transform 300ms ease,
+    box-shadow 300ms ease,
+    border-color 300ms ease,
+    opacity 200ms ease;
+
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.button-adda-aurora__background {
+  position: absolute;
+
+  top: -60%;
+  right: -60%;
+  bottom: -60%;
+  left: -60%;
+
+  pointer-events: none;
+
+  opacity: calc(
+    0.8 * var(--aurora-intensity)
+  );
+
+  filter: blur(32px);
+
+  background:
+    radial-gradient(
+      ellipse at 20% 30%,
+      #22d3ee 0%,
+      transparent 35%
+    ),
+    radial-gradient(
+      ellipse at 80% 20%,
+      #8b5cf6 0%,
+      transparent 35%
+    ),
+    radial-gradient(
+      ellipse at 50% 90%,
+      #ec4899 0%,
+      transparent 40%
+    ),
+    radial-gradient(
+      ellipse at 90% 80%,
+      #6366f1 0%,
+      transparent 35%
+    );
+
+  animation:
+    buttonAddaAurora
+    7s
+    ease-in-out
+    infinite;
+
+  z-index: 0;
+}
+
+.button-adda-aurora__gradient {
+  position: absolute;
+
+  top: -40%;
+  right: -40%;
+  bottom: -40%;
+  left: -40%;
+
+  pointer-events: none;
+
+  opacity: calc(
+    0.4 * var(--aurora-intensity)
+  );
+
+  filter: blur(45px);
+
+  background:
+    linear-gradient(
+      120deg,
+      transparent 10%,
+      #22d3ee 30%,
+      #8b5cf6 50%,
+      #ec4899 70%,
+      transparent 90%
+    );
+
+  animation:
+    buttonAddaAuroraReverse
+    5s
+    ease-in-out
+    infinite;
+
+  transition: opacity 500ms ease;
+
+  z-index: 1;
+}
+
+.button-adda-aurora__glass {
+  position: absolute;
+
+  top: 1px;
+  right: 1px;
+  bottom: 1px;
+  left: 1px;
+
+  border-radius: inherit;
+
+  background: rgba(0, 0, 0, 0.30);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  pointer-events: none;
+
+  z-index: 2;
+}
+
+.button-adda-aurora__border {
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: inherit;
+
+  pointer-events: none;
+
+  opacity: 0.6;
+
+  box-shadow:
+    inset 0 0 12px
+      color-mix(
+        in srgb,
+        var(--aurora-color) 33%,
+        transparent
+      ),
+    0 0 15px
+      color-mix(
+        in srgb,
+        var(--aurora-color) 20%,
+        transparent
+      );
+
+  transition: opacity 300ms ease;
+
+  z-index: 3;
+}
+
+.button-adda-aurora__shimmer {
+  position: absolute;
+
+  top: 0;
+  left: -50%;
+
+  width: 33%;
+  height: 100%;
+
+  pointer-events: none;
+
+  transform: rotate(12deg);
+
+  background: rgba(255, 255, 255, 0.20);
+
+  filter: blur(10px);
+
+  transition:
+    left 700ms ease;
+
+  z-index: 4;
+}
+
+.button-adda-aurora__content {
+  position: relative;
+
+  z-index: 10;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  max-width: 100%;
+
+  color: inherit;
+
+  pointer-events: none;
+}
+
+.button-adda-aurora:hover {
+  transform:
+    translateY(-4px)
+    scale(1.02);
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--aurora-color) 65%,
+      transparent
+    );
+
+  box-shadow:
+    0 0 calc(38px * var(--aurora-intensity))
+      color-mix(
+        in srgb,
+        var(--aurora-color) 38%,
+        transparent
+      ),
+    inset 0 0 calc(25px * var(--aurora-intensity))
+      color-mix(
+        in srgb,
+        var(--aurora-color) 14%,
+        transparent
+      );
+}
+
+
+.button-adda-aurora:hover
+.button-adda-aurora__gradient {
+  opacity: calc(
+    0.7 * var(--aurora-intensity)
+  );
+}
+
+
+.button-adda-aurora:hover
+.button-adda-aurora__border {
+  opacity: 1;
+}
+
+
+.button-adda-aurora:hover
+.button-adda-aurora__shimmer {
+  left: 130%;
+}
+
+.button-adda-aurora:active {
+  transform:
+    translateY(0)
+    scale(0.96);
+}
+
+.button-adda-aurora:focus-visible {
+  outline: 2px solid
+    color-mix(
+      in srgb,
+      var(--aurora-color) 75%,
+      white
+    );
+
+  outline-offset: 3px;
+}
+
+.button-adda-aurora:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+
+  pointer-events: none;
+
+  transform: none;
+}
+
+@media (max-width: 480px) {
+  .button-adda-aurora {
+    width: min(
+      var(--aurora-width),
+      90vw
+    );
+
+    padding-left: 18px;
+    padding-right: 18px;
+
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button-adda-aurora,
+  .button-adda-aurora *,
+  .button-adda-aurora__background,
+  .button-adda-aurora__gradient {
+    animation: none !important;
+    transition: none !important;
+  }
+}

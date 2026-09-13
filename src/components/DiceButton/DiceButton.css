@@ -1,0 +1,442 @@
+.dice-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid var(--dice-border-color);
+  border-radius: var(--dice-radius);
+
+  background:
+    linear-gradient(
+      145deg,
+      var(--dice-bg-start),
+      var(--dice-bg-end)
+    );
+
+  color: var(--dice-text-color);
+
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  perspective: 900px;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -5px 12px rgba(0, 0, 0, 0.35),
+    0 14px 35px rgba(0, 0, 0, 0.35);
+
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.dice-button-inner {
+  position: relative;
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: var(--dice-gap);
+
+  width: 100%;
+  height: 100%;
+}
+
+.dice-button:hover {
+  transform: translateY(calc(var(--dice-hover-lift) * -1));
+
+  border-color: var(--dice-hover-border-color);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 20px 40px rgba(0, 0, 0, 0.45);
+}
+
+.dice-scene {
+  position: relative;
+
+  width: var(--dice-scene-size);
+  height: var(--dice-scene-size);
+
+  flex-shrink: 0;
+
+  perspective: 500px;
+}
+
+.dice-cube {
+  position: absolute;
+
+  width: var(--dice-size);
+  height: var(--dice-size);
+
+  left: 2px;
+  top: 2px;
+
+  transform-style: preserve-3d;
+
+  transform:
+    rotateX(-18deg)
+    rotateY(28deg);
+
+  transition:
+    transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dice-button:hover .dice-cube {
+  transform:
+    rotateX(-22deg)
+    rotateY(38deg)
+    rotateZ(5deg);
+}
+
+.dice-face {
+  position: absolute;
+
+  width: var(--dice-size);
+  height: var(--dice-size);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: var(--dice-face-radius);
+
+  border: 1px solid rgba(255, 255, 255, 0.16);
+
+  background:
+    linear-gradient(
+      145deg,
+      var(--dice-face-start),
+      var(--dice-face-end)
+    );
+
+  color: var(--dice-face-text);
+
+  font-size: 12px;
+  font-weight: 900;
+
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.7),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.18);
+}
+
+.front {
+  transform: translateZ(calc(var(--dice-size) / 2));
+}
+
+.back {
+  transform:
+    rotateY(180deg)
+    translateZ(calc(var(--dice-size) / 2));
+}
+
+.right {
+  transform:
+    rotateY(90deg)
+    translateZ(calc(var(--dice-size) / 2));
+}
+
+.left {
+  transform:
+    rotateY(-90deg)
+    translateZ(calc(var(--dice-size) / 2));
+}
+
+.top {
+  transform:
+    rotateX(90deg)
+    translateZ(calc(var(--dice-size) / 2));
+}
+
+.bottom {
+  transform:
+    rotateX(-90deg)
+    translateZ(calc(var(--dice-size) / 2));
+}
+
+.dice-label {
+  position: relative;
+
+  font-size: var(--dice-font-size);
+  font-weight: var(--dice-font-weight);
+
+  letter-spacing: var(--dice-letter-spacing);
+
+  white-space: nowrap;
+
+  transition:
+    transform 180ms ease,
+    opacity 180ms ease;
+}
+
+.dice-arrow {
+  font-size: 18px;
+  line-height: 1;
+
+  opacity: var(--dice-arrow-opacity);
+
+  transition:
+    transform 220ms ease,
+    opacity 220ms ease;
+}
+
+.dice-button:hover .dice-arrow {
+  opacity: 1;
+
+  transform:
+    translate(3px, -3px);
+}
+
+.dice-shadow {
+  position: absolute;
+
+  width: 25px;
+  height: 7px;
+
+  left: 21px;
+  bottom: 12px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(0, 0, 0, var(--dice-shadow-opacity));
+
+  filter: blur(5px);
+
+  opacity: 0.6;
+
+  transition:
+    transform 250ms ease,
+    opacity 250ms ease;
+}
+
+.dice-button:hover .dice-shadow {
+  transform: scale(0.8);
+  opacity: 0.4;
+}
+
+.dice-button-rolling .dice-cube {
+  animation:
+    dice-roll
+    var(--dice-roll-duration)
+    cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+
+@keyframes dice-roll {
+
+  0% {
+    transform:
+      rotateX(0deg)
+      rotateY(0deg)
+      rotateZ(0deg)
+      scale(1);
+  }
+
+  15% {
+    transform:
+      rotateX(90deg)
+      rotateY(120deg)
+      rotateZ(20deg)
+      scale(1.15);
+  }
+
+  30% {
+    transform:
+      rotateX(210deg)
+      rotateY(250deg)
+      rotateZ(-20deg)
+      scale(0.9);
+  }
+
+  48% {
+    transform:
+      rotateX(390deg)
+      rotateY(420deg)
+      rotateZ(25deg)
+      scale(1.2);
+  }
+
+  65% {
+    transform:
+      rotateX(540deg)
+      rotateY(580deg)
+      rotateZ(-10deg)
+      scale(0.92);
+  }
+
+  82% {
+    transform:
+      rotateX(680deg)
+      rotateY(700deg)
+      rotateZ(5deg)
+      scale(1.08);
+  }
+
+  100% {
+    transform:
+      rotateX(720deg)
+      rotateY(720deg)
+      rotateZ(0deg)
+      scale(1);
+  }
+}
+
+.dice-button-rolling .dice-label {
+  animation:
+    dice-text
+    var(--dice-text-duration)
+    ease-in-out
+    infinite alternate;
+}
+
+
+@keyframes dice-text {
+
+  from {
+    opacity: 0.5;
+
+    transform:
+      translateY(2px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(-2px);
+  }
+}
+
+.dice-spark {
+  position: absolute;
+
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background: var(--dice-spark-color);
+
+  opacity: 0;
+
+  pointer-events: none;
+}
+
+.spark-1 {
+  left: 25%;
+  top: 25%;
+}
+
+.spark-2 {
+  right: 20%;
+  top: 20%;
+}
+
+.spark-3 {
+  left: 30%;
+  bottom: 20%;
+}
+
+.spark-4 {
+  right: 28%;
+  bottom: 25%;
+}
+
+.spark-1 {
+  --sx: -18px;
+  --sy: -16px;
+}
+
+.spark-2 {
+  --sx: 20px;
+  --sy: -13px;
+}
+
+.spark-3 {
+  --sx: -17px;
+  --sy: 15px;
+}
+
+.spark-4 {
+  --sx: 18px;
+  --sy: 14px;
+}
+
+.dice-button-rolling .dice-spark {
+  animation:
+    dice-spark
+    600ms
+    ease-out;
+}
+
+
+@keyframes dice-spark {
+
+  0% {
+    opacity: 0;
+
+    transform:
+      translate(0, 0)
+      scale(0);
+  }
+
+  30% {
+    opacity: 1;
+
+    transform:
+      translate(
+        calc(var(--sx) * 0.4),
+        calc(var(--sy) * 0.4)
+      )
+      scale(1.4);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(
+        var(--sx),
+        var(--sy)
+      )
+      scale(0);
+  }
+}
+
+.dice-button:active {
+  transform:
+    translateY(2px)
+    scale(0.97);
+}
+
+.dice-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+@media (max-width: 480px) {
+
+  .dice-button {
+    width: min(90vw, 220px) !important;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .dice-button,
+  .dice-button *,
+  .dice-cube {
+    animation: none !important;
+    transition: none !important;
+  }
+
+}

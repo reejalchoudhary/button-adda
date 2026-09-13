@@ -1,0 +1,316 @@
+.ripple-wave-button {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  border: none;
+  border-radius: var(--ripple-radius);
+
+  background:
+    var(--ripple-background);
+
+  color:
+    var(--ripple-text-color);
+
+  font-family:
+    Inter,
+    system-ui,
+    sans-serif;
+
+  font-size:
+    var(--font-size);
+
+  font-weight:
+    var(--font-weight);
+
+  letter-spacing:
+    var(--letter-spacing);
+
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.25);
+
+  transition:
+    transform var(--transition-duration) ease,
+    box-shadow var(--transition-duration) ease,
+    opacity var(--transition-duration) ease;
+}
+
+.ripple-wave-button:hover:not(:disabled) {
+  transform:
+    translateY(
+      calc(var(--hover-lift) * -1)
+    );
+
+  box-shadow:
+    0 15px 40px
+    color-mix(
+      in srgb,
+      var(--ripple-color) 25%,
+      transparent
+    );
+}
+
+.ripple-wave-button:active:not(:disabled) {
+  transform:
+    scale(var(--active-scale));
+}
+
+.ripple-wave-button:disabled {
+  pointer-events: none;
+
+  cursor: not-allowed;
+
+  opacity: 0.5;
+}
+
+.ripple-wave-ambient {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 0;
+
+  pointer-events: none;
+
+  background:
+    var(--ripple-color);
+
+  opacity: 0;
+
+  filter:
+    blur(var(--ambient-blur));
+
+  transition:
+    opacity var(--ambient-duration) ease;
+}
+
+.ripple-wave-button:hover:not(:disabled)
+  .ripple-wave-ambient {
+  opacity:
+    var(--ambient-opacity);
+}
+
+.ripple-grid {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 1;
+
+  pointer-events: none;
+
+  opacity: var(--grid-opacity);
+
+  background-image:
+    linear-gradient(
+      rgba(
+        255,
+        255,
+        255,
+        var(--grid-line-opacity)
+      ) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(
+        255,
+        255,
+        255,
+        var(--grid-line-opacity)
+      ) 1px,
+      transparent 1px
+    );
+
+  background-size:
+    var(--grid-size)
+    var(--grid-size);
+}
+
+.ripple-wave-group {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 4;
+
+  pointer-events: none;
+}
+
+.ripple-wave {
+  position: absolute;
+
+  width: var(--wave-start-size);
+  height: var(--wave-start-size);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  transform:
+    translate(-50%, -50%);
+
+  box-sizing: border-box;
+
+  animation:
+    rippleWaveExpand
+    var(--wave-duration)
+    cubic-bezier(
+      0.2,
+      0.8,
+      0.2,
+      1
+    )
+    forwards;
+}
+
+.ripple-wave-primary {
+  border:
+    var(--wave-border-width)
+    solid
+    var(--ripple-color);
+
+  box-shadow:
+    var(--wave-shadow);
+}
+
+.ripple-wave-secondary {
+  border:
+    var(--secondary-wave-border-width)
+    solid
+    color-mix(
+      in srgb,
+      var(--ripple-color)
+      calc(
+        var(--secondary-wave-opacity) * 100%
+      ),
+      transparent
+    );
+}
+
+@keyframes rippleWaveExpand {
+  0% {
+    width: var(--wave-start-size);
+    height: var(--wave-start-size);
+
+    opacity: 0.9;
+
+    transform:
+      translate(-50%, -50%);
+  }
+
+  100% {
+    width: min(420px, 200vw);
+    height: min(420px, 200vw);
+
+    opacity: 0;
+
+    transform:
+      translate(-50%, -50%);
+  }
+}
+
+.ripple-wave-flash {
+  position: absolute;
+
+  width: var(--flash-size);
+  height: var(--flash-size);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  background:
+    var(--ripple-color);
+
+  transform:
+    translate(-50%, -50%);
+
+  box-shadow:
+    0 0 var(--flash-glow)
+    var(--ripple-color);
+
+  animation:
+    rippleWaveFlash
+    var(--flash-duration)
+    ease-out
+    forwards;
+}
+
+@keyframes rippleWaveFlash {
+  0% {
+    opacity: 0.9;
+
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(-50%, -50%)
+      scale(2.8);
+  }
+}
+
+.ripple-wave-border {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 8;
+
+  pointer-events: none;
+
+  border:
+    var(--border-width)
+    solid
+    var(--border-color);
+
+  border-radius: inherit;
+
+  transition:
+    border-color var(--transition-duration) ease;
+}
+
+.ripple-wave-button:hover:not(:disabled)
+  .ripple-wave-border {
+  border-color:
+    var(--hover-border-color);
+}
+
+.ripple-wave-content {
+  position: relative;
+
+  z-index: 10;
+
+  pointer-events: none;
+
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .ripple-wave-button {
+    max-width: calc(100vw - 30px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ripple-wave-button,
+  .ripple-wave-button * {
+    animation: none !important;
+
+    transition: none !important;
+  }
+}

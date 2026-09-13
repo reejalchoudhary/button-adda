@@ -1,0 +1,191 @@
+.morph-button {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--morph-width);
+  height: var(--morph-height);
+  min-height: var(--morph-height);
+
+  padding: 0;
+  overflow: hidden;
+
+  border: none;
+  outline: none;
+
+  border-radius: var(--morph-radius);
+
+  background-color: var(--morph-color);
+  color: var(--morph-text-color);
+
+  font-size: var(--morph-font-size);
+  font-weight: var(--morph-font-weight);
+  letter-spacing: var(--morph-letter-spacing);
+
+  cursor: pointer;
+
+  transition:
+    width var(--morph-duration) var(--morph-easing),
+    border-radius var(--morph-duration) var(--morph-easing),
+    transform 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.morph-button:hover:not(:disabled) {
+  width: var(--morph-hover-width);
+
+  border-radius: var(--morph-hover-radius);
+
+  transform: translateY(calc(var(--morph-hover-lift) * -1));
+
+  box-shadow:
+    0 var(--morph-glow-y) var(--morph-glow-spread)
+      var(--morph-hover-color),
+    0 0 var(--morph-glow-outer-size)
+      color-mix(
+        in srgb,
+        var(--morph-hover-color)
+          var(--morph-glow-mix-opacity),
+        transparent
+      );
+}
+
+.morph-background {
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  transition:
+    opacity var(--morph-background-duration) ease;
+}
+
+.morph-background-gradient {
+  position: absolute;
+  inset: 0;
+}
+
+.morph-button:hover:not(:disabled)
+  .morph-background {
+  opacity: var(--morph-background-opacity);
+}
+
+.morph-circle {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 0;
+  height: 0;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background: var(--morph-circle-color);
+
+  opacity: var(--morph-circle-opacity);
+
+  pointer-events: none;
+
+  transition:
+    width var(--morph-circle-duration) ease-out,
+    height var(--morph-circle-duration) ease-out;
+}
+
+.morph-button:hover:not(:disabled)
+  .morph-circle {
+  width: var(--morph-circle-size);
+  height: var(--morph-circle-size);
+}
+
+.morph-glow {
+  position: absolute;
+  inset: 0;
+
+  border-radius: inherit;
+
+  opacity: 0;
+
+  filter: blur(var(--morph-glow-blur));
+
+  pointer-events: none;
+
+  transition:
+    opacity var(--morph-glow-duration) ease;
+}
+
+.morph-button:hover:not(:disabled)
+  .morph-glow {
+  opacity: var(--morph-glow-opacity);
+}
+
+.morph-text {
+  position: relative;
+  z-index: 10;
+
+  display: block;
+
+  transition:
+    transform var(--morph-text-duration) ease,
+    opacity var(--morph-text-duration) ease;
+}
+
+.morph-text-normal {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.morph-text-hover {
+  position: absolute;
+
+  transform: translateY(var(--morph-text-move));
+  opacity: 0;
+}
+
+.morph-button:hover:not(:disabled)
+  .morph-text-normal {
+  transform: translateY(
+    calc(var(--morph-text-move) * -1)
+  );
+
+  opacity: 0;
+}
+
+.morph-button:hover:not(:disabled)
+  .morph-text-hover {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.morph-button:active:not(:disabled) {
+  transform: translateY(0)
+    scale(var(--morph-active-scale));
+}
+
+.morph-button:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .morph-button,
+  .morph-background,
+  .morph-circle,
+  .morph-glow,
+  .morph-text {
+    transition: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .morph-button {
+    max-width: 90vw;
+  }
+}

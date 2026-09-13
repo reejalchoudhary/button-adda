@@ -1,0 +1,105 @@
+.magnetic-button {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  padding: 0;
+
+  border: none;
+  outline: none;
+
+  font-family: inherit;
+
+  cursor: pointer;
+
+  box-shadow:
+    var(--magnetic-shadow-x)
+    var(--magnetic-shadow-y)
+    var(--magnetic-shadow-blur)
+    color-mix(
+      in srgb,
+      var(--magnetic-color)
+      calc(var(--magnetic-shadow-opacity) * 100%),
+      transparent
+    );
+
+  transition:
+    transform var(--magnetic-ease) ease-out,
+    box-shadow 300ms ease,
+    opacity 300ms ease;
+}
+
+.magnetic-button:hover:not(:disabled) {
+  box-shadow:
+    0 15px 40px
+    color-mix(
+      in srgb,
+      var(--magnetic-color) 45%,
+      transparent
+    );
+}
+
+.magnetic-button:active:not(:disabled) {
+  transform:
+    translate(
+      0,
+      0
+    )
+    scale(var(--magnetic-active-scale));
+}
+
+.magnetic-button:disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.magnetic-glow {
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: inherit;
+
+  background:
+    rgb(
+      255 255 255 /
+      var(--magnetic-glow-opacity)
+    );
+
+  opacity: 0;
+
+  transition:
+    opacity 300ms ease;
+
+  pointer-events: none;
+}
+
+.magnetic-button:hover:not(:disabled)
+  .magnetic-glow {
+  opacity:
+    var(--magnetic-glow-hover-opacity);
+}
+
+.magnetic-content {
+  position: relative;
+  z-index: 10;
+
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .magnetic-button {
+    transition: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .magnetic-button {
+    max-width: 90vw;
+  }
+}

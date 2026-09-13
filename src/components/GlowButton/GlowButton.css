@@ -1,0 +1,145 @@
+.glow-button {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 12px 24px;
+
+  border: none;
+
+  border-radius: var(--glow-radius);
+
+  overflow: hidden;
+
+  background: var(--glow-color);
+
+  color: var(--glow-text);
+
+  font-size: var(--glow-font-size);
+  font-weight: var(--glow-font-weight);
+
+  cursor: pointer;
+
+  box-shadow:
+    0 0 20px
+      color-mix(
+        in srgb,
+        var(--glow-main)
+          calc(var(--glow-opacity) * 100%),
+        transparent
+      );
+
+  transition:
+    transform 300ms ease,
+    background-color 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.glow-button__layer {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 0;
+
+  background:
+    linear-gradient(
+      to right,
+      var(--glow-main),
+      var(--glow-secondary),
+      var(--glow-main)
+    );
+
+  opacity: 0;
+
+  filter: blur(20px);
+
+  pointer-events: none;
+
+  transition:
+    opacity 300ms ease;
+}
+
+.glow-button:hover:not(:disabled)
+.glow-button__layer {
+  opacity: var(--glow-layer-opacity);
+}
+
+.glow-button__shimmer {
+  position: absolute;
+
+  inset-block: 0;
+  left: -100%;
+
+  width: var(--glow-shimmer-width);
+
+  transform: rotate(12deg);
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      var(--glow-shimmer-opacity)
+    );
+
+  filter: blur(12px);
+
+  pointer-events: none;
+
+  transition:
+    left var(--glow-shimmer-speed) ease;
+}
+
+.glow-button:hover:not(:disabled)
+.glow-button__shimmer {
+  left: 120%;
+}
+
+.glow-button__content {
+  position: relative;
+
+  z-index: 10;
+}
+
+.glow-button:hover:not(:disabled) {
+  transform:
+    translateY(
+      calc(var(--glow-hover-lift) * -1)
+    );
+
+  background: var(--glow-hover-color);
+
+  box-shadow:
+    0 0 35px
+      color-mix(
+        in srgb,
+        var(--glow-main)
+          calc(var(--glow-hover-opacity) * 100%),
+        transparent
+      );
+}
+
+.glow-button:active:not(:disabled) {
+  transform:
+    translateY(0)
+    scale(var(--glow-active-scale));
+}
+
+.glow-button:disabled {
+  pointer-events: none;
+
+  cursor: not-allowed;
+
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow-button,
+  .glow-button * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

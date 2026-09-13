@@ -1,0 +1,357 @@
+.starfield-button {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--star-width);
+  height: var(--star-height);
+  min-height: var(--star-height);
+
+  padding: 0;
+
+  overflow: hidden;
+
+  border:
+    var(--star-border-width)
+    solid
+    var(--star-border-color);
+
+  border-radius: var(--star-radius);
+
+  background: var(--star-background);
+  color: var(--star-text-color);
+
+  font-family: inherit;
+  font-size: var(--star-font-size);
+  font-weight: var(--star-font-weight);
+  letter-spacing: var(--star-letter-spacing);
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  isolation: isolate;
+
+  box-shadow:
+    0 12px 35px
+    rgba(0, 0, 0, 0.4);
+
+  transition:
+    transform var(--star-transition) ease,
+    border-color var(--star-transition) ease,
+    box-shadow var(--star-transition) ease,
+    opacity var(--star-transition) ease;
+}
+
+.starfield-space {
+  position: absolute;
+  inset: 0;
+
+  z-index: 1;
+
+  border-radius: inherit;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(96, 165, 250, 0.08),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(99, 102, 241, 0.08),
+      transparent 40%
+    ),
+    var(--star-background);
+}
+
+.starfield-stars {
+  position: absolute;
+  inset: 0;
+
+  z-index: 2;
+
+  overflow: hidden;
+
+  pointer-events: none;
+}
+
+.starfield-star {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: var(--star-size);
+  height: var(--star-size);
+
+  border-radius: 999px;
+
+  background: var(--star-color);
+
+  opacity: var(--star-opacity);
+
+  transform:
+    translate(-50%, -50%)
+    translate(
+      var(--star-x),
+      var(--star-y)
+    )
+    scale(var(--star-depth));
+
+  box-shadow:
+    0 0 4px
+    rgba(255, 255, 255, 0.7);
+
+  animation:
+    starfieldTravel
+    calc(
+      var(--star-duration) /
+      var(--star-speed)
+    )
+    linear
+    var(--star-delay)
+    infinite;
+
+  will-change:
+    transform,
+    opacity;
+
+  pointer-events: none;
+}
+
+@keyframes starfieldTravel {
+  0% {
+    transform:
+      translate(-50%, -50%)
+      translate(
+        calc(var(--star-x) * 0.08),
+        calc(var(--star-y) * 0.08)
+      )
+      scale(0.05);
+
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.35;
+  }
+
+  55% {
+    opacity: var(--star-opacity);
+  }
+
+  85% {
+    opacity: 0.9;
+  }
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      translate(
+        calc(var(--star-x) * 3.8),
+        calc(var(--star-y) * 3.8)
+      )
+      scale(2.8);
+
+    opacity: 0;
+  }
+}
+
+.starfield-center-glow {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  z-index: 3;
+
+  width: var(--star-center-glow-size);
+  height: var(--star-center-glow-size);
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background: var(--star-accent);
+
+  opacity: var(--star-center-glow-opacity);
+
+  filter: blur(
+    var(--star-center-glow-blur)
+  );
+
+  pointer-events: none;
+}
+
+.starfield-vignette {
+  position: absolute;
+  inset: 0;
+
+  z-index: 4;
+
+  border-radius: inherit;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 30%,
+      rgba(
+        0,
+        0,
+        0,
+        var(--star-vignette-middle-opacity)
+      ) 70%,
+      rgba(
+        0,
+        0,
+        0,
+        var(--star-vignette-outer-opacity)
+      ) 100%
+    );
+}
+
+.starfield-border {
+  position: absolute;
+  inset: 0;
+
+  z-index: 6;
+
+  border:
+    var(--star-border-width)
+    solid
+    var(--star-border-color);
+
+  border-radius: inherit;
+
+  pointer-events: none;
+
+  transition:
+    border-color var(--star-transition) ease;
+}
+
+.starfield-button:hover:not(:disabled)
+  .starfield-border {
+  border-color:
+    var(--star-hover-border-color);
+}
+
+.starfield-content {
+  position: relative;
+
+  z-index: 10;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+
+  transition:
+    transform var(--star-transition) ease;
+}
+
+.starfield-button:hover:not(:disabled)
+  .starfield-content {
+  transform:
+    scale(
+      var(--star-content-hover-scale)
+    );
+}
+
+.starfield-indicator {
+  position: absolute;
+
+  right: var(--star-indicator-right);
+  bottom: var(--star-indicator-bottom);
+
+  z-index: 10;
+
+  font-size:
+    var(--star-indicator-font-size);
+
+  font-weight: 600;
+
+  line-height: 1;
+
+  letter-spacing:
+    var(--star-indicator-spacing);
+
+  text-transform: uppercase;
+
+  opacity:
+    var(--star-indicator-opacity);
+
+  pointer-events: none;
+}
+
+.starfield-button:hover:not(:disabled) {
+  transform:
+    translateY(
+      calc(
+        var(--star-hover-lift) * -1
+      )
+    );
+
+  border-color:
+    var(--star-hover-border-color);
+
+  box-shadow:
+    0 15px 45px
+    rgba(96, 165, 250, 0.18),
+    0 0 70px
+    rgba(
+      96,
+      165,
+      250,
+      var(--star-hover-glow-opacity)
+    );
+}
+
+.starfield-button:active:not(:disabled) {
+  transform:
+    scale(var(--star-active-scale));
+
+  box-shadow:
+    0 5px 20px
+    rgba(0, 0, 0, 0.4);
+}
+
+.starfield-button:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.starfield-button:focus-visible {
+  outline:
+    2px solid
+    var(--star-accent);
+
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .starfield-button {
+    max-width: 90vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .starfield-star {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .starfield-button,
+  .starfield-content,
+  .starfield-border {
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,167 @@
+.glass-button {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--glass-color)
+        calc(var(--glass-border-opacity) * 100%),
+      transparent
+    );
+
+  border-radius: var(--glass-radius);
+
+  overflow: hidden;
+
+  cursor: pointer;
+
+  color: var(--glass-text-color);
+
+  background-color:
+    color-mix(
+      in srgb,
+      var(--glass-color)
+        calc(var(--glass-opacity) * 100%),
+      transparent
+    );
+
+  backdrop-filter:
+    blur(var(--glass-blur));
+
+  -webkit-backdrop-filter:
+    blur(var(--glass-blur));
+
+  box-shadow:
+    0 8px 32px
+      color-mix(
+        in srgb,
+        var(--glass-color)
+          calc(var(--glass-shadow-opacity) * 100%),
+        transparent
+      ),
+    inset 0 1px 1px
+      rgba(255, 255, 255, 0.25);
+
+  font-size: var(--glass-font-size);
+  font-weight: var(--glass-font-weight);
+
+  transition:
+    transform 300ms ease,
+    box-shadow 300ms ease,
+    border-color 300ms ease;
+}
+
+.glass-button__shine-top {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  top: 0;
+
+  height: 1px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      var(--glass-shine-opacity)
+    );
+
+  pointer-events: none;
+}
+
+.glass-button__glow {
+  position: absolute;
+
+  inset: -40px;
+
+  border-radius: 9999px;
+
+  opacity: 0;
+
+  background: var(--glass-color);
+
+  filter: blur(32px);
+
+  pointer-events: none;
+
+  transition:
+    opacity 500ms ease;
+}
+
+.glass-button:hover:not(:disabled)
+.glass-button__glow {
+  opacity: var(--glass-hover-glow);
+}
+
+.glass-button__reflection {
+  position: absolute;
+
+  left: -100%;
+  top: 0;
+
+  width: var(--glass-reflection-width);
+  height: 100%;
+
+  transform: rotate(12deg);
+
+  background:
+    linear-gradient(
+      to right,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+
+  pointer-events: none;
+
+  transition:
+    left var(--glass-reflection-speed) ease;
+}
+
+.glass-button:hover:not(:disabled)
+.glass-button__reflection {
+  left: 130%;
+}
+
+.glass-button__content {
+  position: relative;
+
+  z-index: 10;
+}
+
+.glass-button:hover:not(:disabled) {
+  transform:
+    translateY(
+      calc(var(--glass-hover-lift) * -1)
+    );
+}
+
+.glass-button:active:not(:disabled) {
+  transform:
+    translateY(0)
+    scale(0.95);
+}
+
+.glass-button:disabled {
+  pointer-events: none;
+
+  cursor: not-allowed;
+
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-button,
+  .glass-button * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

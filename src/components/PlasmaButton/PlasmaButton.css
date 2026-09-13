@@ -1,0 +1,635 @@
+.plasma-button {
+  position: relative;
+  isolation: isolate;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--plasma-width);
+  height: var(--plasma-height);
+
+  padding: 0;
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+
+  border:
+    var(--plasma-border-width)
+    solid
+    color-mix(
+      in srgb,
+      var(--plasma-primary)
+      calc(
+        var(--plasma-border-opacity) * 100%
+      ),
+      transparent
+    );
+
+  border-radius: var(--plasma-radius);
+
+  background:
+    var(--plasma-background);
+
+  color: var(--plasma-text);
+
+  font-size: var(--plasma-font-size);
+  font-weight: var(--plasma-font-weight);
+  letter-spacing: var(--plasma-letter-spacing);
+
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 35px
+    rgba(0, 0, 0, 0.35);
+
+  transition:
+    transform var(--plasma-transition) ease,
+    border-color var(--plasma-transition) ease,
+    box-shadow var(--plasma-transition) ease;
+}
+
+.plasma-button:hover:not(:disabled) {
+  transform:
+    translateY(
+      calc(
+        var(--plasma-hover-lift) * -1
+      )
+    );
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--plasma-primary)
+      calc(
+        var(--plasma-hover-border-opacity)
+        * 100%
+      ),
+      transparent
+    );
+
+  box-shadow:
+    0 0 20px
+      color-mix(
+        in srgb,
+        var(--plasma-primary) 25%,
+        transparent
+      ),
+    0 0 60px
+      color-mix(
+        in srgb,
+        var(--plasma-secondary) 15%,
+        transparent
+      );
+}
+
+.plasma-field {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  border-radius: inherit;
+
+  pointer-events: none;
+
+  z-index: 2;
+}
+
+.plasma-arc {
+  position: absolute;
+
+  inset: 0;
+
+  box-sizing: border-box;
+
+  border-radius: inherit;
+
+  border:
+    var(--plasma-arc-width)
+    solid transparent;
+
+  opacity:
+    calc(
+      var(--plasma-arc-opacity)
+      * var(--plasma-intensity)
+    );
+
+  filter:
+    blur(var(--plasma-arc-blur))
+    drop-shadow(
+      0 0 var(--plasma-arc-glow)
+      var(--plasma-primary)
+    );
+
+  transform-origin: center;
+
+  pointer-events: none;
+
+  transition:
+    opacity 300ms ease,
+    filter 300ms ease;
+}
+
+.plasma-arc-1 {
+  border-top-color:
+    var(--plasma-primary);
+
+  animation:
+    plasmaTravelOne
+    var(--plasma-arc-one-duration)
+    linear
+    infinite;
+}
+
+.plasma-arc-2 {
+  border-right-color:
+    var(--plasma-secondary);
+
+  animation:
+    plasmaTravelTwo
+    var(--plasma-arc-two-duration)
+    linear
+    infinite;
+}
+
+.plasma-arc-3 {
+  border-bottom-color:
+    var(--plasma-primary);
+
+  animation:
+    plasmaTravelThree
+    var(--plasma-arc-three-duration)
+    linear
+    infinite;
+}
+
+.plasma-arc-4 {
+  border-left-color:
+    var(--plasma-secondary);
+
+  animation:
+    plasmaTravelFour
+    var(--plasma-arc-four-duration)
+    linear
+    infinite;
+}
+
+.plasma-arc-5 {
+  inset: 0;
+
+  border-top-color:
+    var(--plasma-secondary);
+
+  border-left-color:
+    var(--plasma-primary);
+
+  animation:
+    plasmaTravelFive
+    var(--plasma-arc-five-duration)
+    linear
+    infinite;
+}
+
+@keyframes plasmaTravelOne {
+
+  0% {
+    clip-path:
+      inset(0 100% 90% 0);
+
+    opacity: 0;
+  }
+
+  25% {
+    clip-path:
+      inset(0 0 90% 0);
+
+    opacity: 1;
+  }
+
+  50% {
+    clip-path:
+      inset(0 0 0 70%);
+
+    opacity: 0.7;
+  }
+
+  75% {
+    clip-path:
+      inset(90% 0 0 0);
+
+    opacity: 0.3;
+  }
+
+  100% {
+    clip-path:
+      inset(0 100% 90% 0);
+
+    opacity: 0;
+  }
+}
+
+
+@keyframes plasmaTravelTwo {
+
+  0% {
+    clip-path:
+      inset(100% 0 0 90%);
+
+    opacity: 0;
+  }
+
+  30% {
+    clip-path:
+      inset(0 0 0 90%);
+
+    opacity: 1;
+  }
+
+  55% {
+    clip-path:
+      inset(0 0 70% 0);
+
+    opacity: 0.7;
+  }
+
+  80% {
+    clip-path:
+      inset(0 90% 0 0);
+
+    opacity: 0.3;
+  }
+
+  100% {
+    clip-path:
+      inset(100% 0 0 90%);
+
+    opacity: 0;
+  }
+}
+
+
+@keyframes plasmaTravelThree {
+
+  0% {
+    clip-path:
+      inset(90% 0 0 100%);
+
+    opacity: 0;
+  }
+
+  25% {
+    clip-path:
+      inset(90% 0 0 0);
+
+    opacity: 1;
+  }
+
+  55% {
+    clip-path:
+      inset(0 0 0 60%);
+
+    opacity: 0.6;
+  }
+
+  80% {
+    clip-path:
+      inset(0 0 90% 0);
+
+    opacity: 0.25;
+  }
+
+  100% {
+    clip-path:
+      inset(90% 0 0 100%);
+
+    opacity: 0;
+  }
+}
+
+
+@keyframes plasmaTravelFour {
+
+  0% {
+    clip-path:
+      inset(0 90% 0 0);
+
+    opacity: 0;
+  }
+
+  30% {
+    clip-path:
+      inset(0 90% 0 0);
+
+    opacity: 1;
+  }
+
+  60% {
+    clip-path:
+      inset(0 0 0 0);
+
+    opacity: 0.6;
+  }
+
+  85% {
+    clip-path:
+      inset(0 0 0 90%);
+
+    opacity: 0.2;
+  }
+
+  100% {
+    clip-path:
+      inset(0 90% 0 0);
+
+    opacity: 0;
+  }
+}
+
+
+@keyframes plasmaTravelFive {
+
+  0% {
+    transform:
+      rotate(0deg)
+      scale(1);
+
+    opacity: 0.1;
+  }
+
+  50% {
+    transform:
+      rotate(180deg)
+      scale(1.04);
+
+    opacity: 0.8;
+  }
+
+  100% {
+    transform:
+      rotate(360deg)
+      scale(1);
+
+    opacity: 0.1;
+  }
+}
+
+.plasma-active .plasma-arc {
+  opacity:
+    var(--plasma-active-arc-opacity);
+
+  filter:
+    blur(var(--plasma-arc-blur))
+    drop-shadow(
+      0 0 8px
+      var(--plasma-primary)
+    );
+}
+
+.plasma-active .plasma-node {
+  animation-duration:
+    var(--plasma-active-node-duration);
+}
+
+.plasma-active .plasma-core {
+  animation-duration:
+    var(--plasma-active-core-duration);
+}
+
+.plasma-node {
+  position: absolute;
+
+  width: var(--plasma-node-size);
+  height: var(--plasma-node-size);
+
+  border-radius: 50%;
+
+  z-index: 6;
+
+  opacity:
+    calc(
+      var(--plasma-node-opacity)
+      * var(--plasma-intensity)
+    );
+
+  filter:
+    blur(var(--plasma-node-blur))
+    drop-shadow(
+      0 0 var(--plasma-node-glow)
+      currentColor
+    );
+
+  animation:
+    plasmaNodePulse
+    var(--plasma-node-duration)
+    ease-in-out
+    infinite;
+
+  pointer-events: none;
+}
+
+.plasma-node-1 {
+  left: 12%;
+  top: 10%;
+
+  color: var(--plasma-primary);
+}
+
+
+.plasma-node-2 {
+  right: 15%;
+  top: 18%;
+
+  color: var(--plasma-secondary);
+
+  animation-delay: -0.4s;
+}
+
+
+.plasma-node-3 {
+  right: 10%;
+  bottom: 14%;
+
+  color: var(--plasma-primary);
+
+  animation-delay: -0.8s;
+}
+
+
+.plasma-node-4 {
+  left: 18%;
+  bottom: 12%;
+
+  color: var(--plasma-secondary);
+
+  animation-delay: -1.1s;
+}
+
+@keyframes plasmaNodePulse {
+
+  0%,
+  100% {
+    transform: scale(0.6);
+    opacity: 0.35;
+  }
+
+  50% {
+    transform: scale(1.8);
+    opacity: 1;
+  }
+}
+
+.plasma-core {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 3;
+
+  border-radius: inherit;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+
+      color-mix(
+        in srgb,
+        var(--plasma-primary) 8%,
+        transparent
+      ),
+
+      transparent
+        var(--plasma-core-size)
+    );
+
+  opacity:
+    calc(
+      var(--plasma-core-opacity)
+      * var(--plasma-intensity)
+    );
+
+  animation:
+    plasmaCorePulse
+    var(--plasma-core-duration)
+    ease-in-out
+    infinite;
+
+  pointer-events: none;
+}
+
+@keyframes plasmaCorePulse {
+
+  0%,
+  100% {
+    transform: scale(0.95);
+    opacity: 0.35;
+  }
+
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+.plasma-core-border {
+  position: absolute;
+
+  inset: 2px;
+
+  z-index: 5;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.10);
+
+  border-radius:
+    calc(
+      var(--plasma-radius) - 2px
+    );
+
+  pointer-events: none;
+}
+
+.plasma-content {
+  position: relative;
+
+  z-index: 20;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  white-space: nowrap;
+
+  text-shadow:
+    0 0 8px
+    color-mix(
+      in srgb,
+      var(--plasma-primary) 55%,
+      transparent
+    );
+}
+
+.plasma-status {
+  position: absolute;
+
+  right: 12px;
+  bottom: 6px;
+
+  z-index: 20;
+
+  color:
+    var(--plasma-status-color);
+
+  font-size:
+    var(--plasma-status-size);
+
+  letter-spacing:
+    var(--plasma-status-spacing);
+
+  line-height: 1;
+
+  opacity:
+    var(--plasma-status-opacity);
+
+  pointer-events: none;
+}
+
+.plasma-button:active:not(:disabled) {
+  transform:
+    translateY(0)
+    scale(
+      var(--plasma-active-scale)
+    );
+}
+
+.plasma-button:disabled {
+  cursor: not-allowed;
+
+  pointer-events: none;
+
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .plasma-button,
+  .plasma-arc,
+  .plasma-node,
+  .plasma-core {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .plasma-button {
+    max-width: 90vw;
+  }
+}

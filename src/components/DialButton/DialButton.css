@@ -1,0 +1,202 @@
+.dial-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  box-sizing: border-box;
+  padding: 12px 16px;
+
+  border: 1px solid var(--dial-border);
+  border-radius: var(--dial-radius);
+
+  background: var(--dial-background);
+  color: var(--dial-text);
+
+  overflow: hidden;
+  user-select: none;
+}
+
+.dial-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 20% 50%,
+      color-mix(
+        in srgb,
+        var(--dial-color)
+        calc(18% * var(--dial-glow)),
+        transparent
+      ),
+      transparent 55%
+    );
+}
+
+.dial-area {
+  position: relative;
+
+  width: var(--dial-knob-size);
+  height: var(--dial-knob-size);
+
+  flex-shrink: 0;
+
+  touch-action: none;
+  cursor: grab;
+}
+
+.dial-dragging .dial-area {
+  cursor: grabbing;
+}
+
+.progress-ring {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  transform: rotate(-90deg);
+}
+
+.progress-ring circle {
+  fill: none;
+  stroke-width: var(--dial-progress-width);
+}
+
+.progress-background {
+  stroke: var(--dial-progress-track);
+}
+
+.progress-value {
+  stroke: var(--dial-progress);
+  stroke-linecap: round;
+
+  transition: stroke-dashoffset 80ms linear;
+}
+
+.knob {
+  position: absolute;
+  inset: 6px;
+
+  border-radius: 50%;
+
+  background: var(--dial-knob);
+
+  border: 1px solid var(--dial-border);
+
+  transition: transform 80ms linear;
+}
+
+.knob-line {
+  position: absolute;
+
+  top: 5px;
+  left: 50%;
+
+  width: 2px;
+  height: 12px;
+
+  transform: translateX(-50%);
+
+  border-radius: 999px;
+
+  background: var(--dial-color);
+}
+
+.knob-center {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--dial-knob-center);
+
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.dial-content {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+
+  flex: 1;
+  min-width: 0;
+}
+
+.dial-title {
+  font-size: var(--dial-title-size);
+  font-weight: 800;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dial-subtitle {
+  font-size: var(--dial-subtitle-size);
+  color: var(--dial-subtitle);
+}
+
+.dial-status {
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dial-status span {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: var(--dial-status);
+}
+
+.dial-status.active span {
+  background: var(--dial-status-active);
+
+  box-shadow:
+    0 0
+    calc(10px * var(--dial-glow))
+    var(--dial-status-active);
+}
+
+.dial-completed {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--dial-color) 40%,
+      var(--dial-border)
+    );
+}
+
+.dial-disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+@media (max-width: 480px) {
+  .dial-button {
+    max-width: calc(100vw - 30px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dial-button,
+  .dial-button * {
+    transition: none !important;
+  }
+}

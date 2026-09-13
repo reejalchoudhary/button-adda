@@ -1,0 +1,381 @@
+.swipe-action-button {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--swipe-width);
+  height: var(--swipe-height);
+
+  overflow: hidden;
+
+  border:
+    var(--swipe-border-width)
+    solid
+    var(--swipe-border-color);
+
+  border-radius: var(--swipe-radius);
+
+  background: var(--swipe-color);
+
+  color: var(--swipe-text-color);
+
+  box-shadow:
+    var(--swipe-shadow);
+
+  user-select: none;
+
+  touch-action: none;
+
+  isolation: isolate;
+
+  transition:
+    background-color
+      var(--swipe-transition) ease,
+    box-shadow
+      var(--swipe-transition) ease,
+    transform
+      var(--swipe-transition) ease;
+}
+
+.swipe-progress {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 0;
+
+  border-radius: inherit;
+
+  background: var(--swipe-accent);
+
+  opacity: var(--swipe-progress-opacity);
+
+  pointer-events: none;
+
+  z-index: 2;
+
+  will-change: width;
+}
+
+.swipe-text {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: var(--swipe-content-gap);
+
+  color: var(--swipe-text-color);
+
+  font-size: var(--swipe-font-size);
+
+  font-weight: var(--swipe-font-weight);
+
+  letter-spacing:
+    var(--swipe-letter-spacing);
+
+  pointer-events: none;
+
+  z-index: 5;
+}
+
+.swipe-arrow {
+  display: inline-block;
+
+  opacity: var(--swipe-arrow-opacity);
+
+  animation:
+    swipe-arrow-animation
+    var(--swipe-arrow-duration)
+    ease-in-out
+    infinite;
+}
+
+.swipe-arrow-static {
+  display: inline-block;
+
+  opacity: var(--swipe-arrow-opacity);
+}
+
+@keyframes swipe-arrow-animation {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.45;
+  }
+
+  50% {
+    transform:
+      translateX(
+        var(--swipe-arrow-distance)
+      );
+
+    opacity: 1;
+  }
+}
+
+.swipe-handle {
+  position: absolute;
+
+  top: 50%;
+
+  left: var(--swipe-handle-left);
+
+  width: var(--swipe-handle-size);
+  height: var(--swipe-handle-size);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform:
+    translateY(-50%);
+
+  border-radius:
+    var(--swipe-handle-radius);
+
+  background:
+    var(--swipe-handle-background);
+
+  color:
+    var(--swipe-handle-color);
+
+  font-size:
+    var(--swipe-handle-font-size);
+
+  font-weight: 700;
+
+  cursor: grab;
+
+  z-index: 20;
+
+  box-shadow:
+    0 4px 12px
+    var(--swipe-handle-shadow-color);
+
+  transition:
+    transform
+      var(--swipe-handle-transition)
+      ease,
+    box-shadow
+      var(--swipe-handle-transition)
+      ease;
+
+  will-change: left;
+
+  touch-action: none;
+}
+
+.swipe-handle:hover {
+  transform:
+    translateY(-50%)
+    scale(
+      var(--swipe-handle-hover-scale)
+    );
+
+  box-shadow:
+    0 6px 18px
+    var(--swipe-handle-hover-shadow-color);
+}
+
+.swipe-handle.swipe-dragging {
+  cursor: grabbing;
+
+  transform:
+    translateY(-50%)
+    scale(
+      var(--swipe-handle-drag-scale)
+    );
+
+  box-shadow:
+    0 8px 24px
+    var(--swipe-handle-dragging-shadow-color);
+}
+
+.swipe-action-button.swipe-action-completed {
+  background:
+    var(--swipe-success);
+
+  box-shadow:
+    0
+    var(--swipe-success-shadow-y)
+    var(--swipe-success-shadow-blur)
+    var(--swipe-success-shadow-color);
+
+  animation:
+    swipe-success-pop
+    var(--swipe-success-animation)
+    ease-out;
+}
+
+@keyframes swipe-success-pop {
+  0% {
+    transform: scale(0.97);
+  }
+
+  60% {
+    transform: scale(1.02);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.swipe-success-text {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: var(--swipe-success-gap);
+
+  color:
+    var(--swipe-success-text-color);
+
+  font-size:
+    var(--swipe-success-font-size);
+
+  font-weight:
+    var(--swipe-success-font-weight);
+
+  letter-spacing:
+    var(--swipe-success-spacing);
+
+  z-index: 10;
+
+  animation:
+    swipe-success-text-animation
+    var(--swipe-success-animation)
+    ease-out;
+}
+
+@keyframes swipe-success-text-animation {
+  from {
+    opacity: 0;
+
+    transform:
+      scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      scale(1);
+  }
+}
+
+.success-check {
+  width:
+    var(--swipe-success-icon-size);
+
+  height:
+    var(--swipe-success-icon-size);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background:
+    var(--swipe-success-icon-background);
+
+  font-size:
+    calc(
+      var(--swipe-success-icon-size) * 0.54
+    );
+
+  line-height: 1;
+}
+
+.swipe-complete-icon {
+  position: absolute;
+
+  left: 12px;
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  width:
+    var(--swipe-completion-icon-size);
+
+  height:
+    var(--swipe-completion-icon-size);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    var(--swipe-completion-icon-background);
+
+  color:
+    var(--swipe-success-text-color);
+
+  font-size:
+    var(--swipe-completion-icon-font-size);
+
+  font-weight: 800;
+
+  line-height: 1;
+
+  z-index: 10;
+}
+
+.swipe-action-button.swipe-action-disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+
+  pointer-events: none;
+}
+
+.swipe-action-button:focus-visible {
+  outline:
+    2px solid
+    var(--swipe-accent);
+
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .swipe-action-button {
+    width: min(
+      var(--swipe-width),
+      90vw
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swipe-arrow {
+    animation: none;
+  }
+
+  .swipe-action-button.swipe-action-completed,
+  .swipe-success-text {
+    animation: none;
+  }
+
+  .swipe-action-button,
+  .swipe-handle {
+    transition-duration: 0.01ms !important;
+  }
+}

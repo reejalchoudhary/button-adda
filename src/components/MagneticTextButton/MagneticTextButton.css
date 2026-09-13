@@ -1,0 +1,113 @@
+.magnetic-text-button {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  padding: 0;
+
+  font-family: inherit;
+
+  cursor: pointer;
+
+  user-select: none;
+
+  outline: none;
+
+  transition:
+    transform var(--magnetic-transition) ease,
+    background-color var(--magnetic-transition) ease,
+    color var(--magnetic-transition) ease,
+    border-color var(--magnetic-transition) ease,
+    box-shadow var(--magnetic-transition) ease;
+}
+
+.magnetic-text-button:hover:not(:disabled) {
+
+}
+
+.magnetic-text-button:active:not(:disabled) {
+  transform: scale(var(--active-scale));
+}
+
+.magnetic-text-button:disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.magnetic-text-border {
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: inherit;
+
+  pointer-events: none;
+
+  transition:
+    border-color var(--magnetic-transition) ease;
+}
+
+.magnetic-text-content {
+  position: relative;
+
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  white-space: nowrap;
+}
+
+.magnetic-character {
+  display: inline-block;
+
+  will-change: transform;
+
+  transition:
+    transform var(--character-transition)
+    var(--character-ease);
+}
+
+.magnetic-text-arrow {
+  position: relative;
+
+  z-index: 10;
+
+  display: inline-block;
+
+  margin-left: var(--arrow-gap);
+
+  transition:
+    transform var(--arrow-transition) ease;
+}
+
+.magnetic-text-button:hover:not(:disabled)
+  .magnetic-text-arrow {
+  transform:
+    translateX(var(--arrow-move));
+}
+
+.magnetic-text-button::selection,
+.magnetic-text-button *::selection {
+  background: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .magnetic-text-button,
+  .magnetic-character,
+  .magnetic-text-arrow {
+    transition: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .magnetic-text-button {
+    max-width: 90vw;
+  }
+}

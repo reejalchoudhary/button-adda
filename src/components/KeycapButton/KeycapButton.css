@@ -1,0 +1,224 @@
+.keycap-button {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  padding: 0 10px 0 18px;
+
+  border:
+    var(--keycap-border-width)
+    solid
+    var(--keycap-border);
+
+  border-bottom:
+    var(--keycap-bottom-width)
+    solid
+    var(--keycap-bottom-border);
+
+  border-radius:
+    var(--keycap-radius);
+
+  background:
+    var(--keycap-bg);
+
+  color:
+    var(--keycap-text);
+
+  font-family: inherit;
+
+  font-size:
+    var(--keycap-font-size);
+
+  font-weight:
+    var(--keycap-font-weight);
+
+  letter-spacing:
+    var(--keycap-letter-spacing);
+
+  cursor: pointer;
+
+  user-select: none;
+
+  box-shadow:
+    0
+    var(--keycap-shadow-y)
+    0
+    var(--keycap-shadow-color),
+
+    0
+    10px
+    var(--keycap-shadow-blur)
+    rgba(
+      0,
+      0,
+      0,
+      var(--keycap-shadow-opacity)
+    );
+
+  transform:
+    translateY(0);
+
+  transition:
+    transform 100ms ease,
+    box-shadow 100ms ease,
+    border-bottom-width 100ms ease,
+    background 100ms ease;
+}
+
+.keycap-button:hover:not(:disabled) {
+  background:
+    var(--keycap-hover-bg);
+
+  transform:
+    translateY(
+      calc(
+        var(--keycap-hover-lift) * -1
+      )
+    );
+
+  box-shadow:
+    0
+    var(--keycap-hover-shadow-y)
+    0
+    var(--keycap-shadow-color),
+
+    0
+    12px
+    var(--keycap-hover-shadow-blur)
+    rgba(
+      0,
+      0,
+      0,
+      var(--keycap-hover-shadow-opacity)
+    );
+}
+
+.keycap-button.keycap-pressed {
+  transform:
+    translateY(
+      var(--keycap-press-distance)
+    );
+
+  border-bottom-width:
+    var(--keycap-pressed-bottom-width);
+
+  box-shadow:
+    0
+    var(--keycap-pressed-shadow-y)
+    0
+    var(--keycap-shadow-color),
+
+    0
+    3px
+    var(--keycap-pressed-shadow-blur)
+    rgba(
+      0,
+      0,
+      0,
+      var(--keycap-shadow-opacity)
+    );
+}
+
+.keycap-label {
+  white-space: nowrap;
+}
+
+.keycap-shortcut {
+  min-width:
+    var(--shortcut-min-width);
+
+  height:
+    var(--shortcut-height);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    0
+    var(--shortcut-padding);
+
+  border:
+    var(--shortcut-border-width)
+    solid
+    var(--shortcut-border);
+
+  border-bottom:
+    var(--shortcut-bottom-width)
+    solid
+    var(--shortcut-bottom-border);
+
+  border-radius:
+    var(--shortcut-radius);
+
+  background:
+    var(--shortcut-bg);
+
+  color:
+    var(--shortcut-text);
+
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    monospace;
+
+  font-size:
+    var(--shortcut-font-size);
+
+  font-weight:
+    var(--shortcut-font-weight);
+
+  white-space: nowrap;
+
+  box-shadow:
+    inset
+    0 1px 1px
+    rgba(255, 255, 255, 0.8);
+
+  transition:
+    transform 100ms ease,
+    border-bottom-width 100ms ease;
+}
+
+.keycap-pressed
+.keycap-shortcut {
+  transform:
+    translateY(
+      var(--shortcut-pressed-distance)
+    );
+
+  border-bottom-width: 1px;
+}
+
+.keycap-button:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow:
+    0 3px 0
+    var(--keycap-shadow-color);
+}
+
+@media (max-width: 480px) {
+  .keycap-button {
+    width:
+      min(90vw, 230px) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .keycap-button,
+  .keycap-shortcut {
+    transition: none;
+  }
+}

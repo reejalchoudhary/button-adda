@@ -1,0 +1,341 @@
+.orbit-button {
+  position: relative;
+
+  isolation: isolate;
+  perspective: 800px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--orbit-width);
+  height: var(--orbit-height);
+
+  padding: 0;
+  overflow: visible;
+
+  border:
+    var(--orbit-border-width)
+    solid
+    var(--orbit-border-color);
+
+  border-radius: var(--orbit-radius);
+
+  background: var(--orbit-background);
+  color: var(--orbit-text-color);
+
+  font-size: var(--orbit-font-size);
+  font-weight: var(--orbit-font-weight);
+  letter-spacing: var(--orbit-letter-spacing);
+
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.3);
+
+  transition:
+    transform var(--orbit-transition) ease,
+    box-shadow var(--orbit-transition) ease,
+    border-color var(--orbit-transition) ease;
+}
+
+.orbit-button:hover:not(:disabled) {
+  transform:
+    translateY(
+      calc(var(--orbit-hover-lift) * -1)
+    );
+
+  border-color:
+    var(--orbit-hover-border-color);
+
+  box-shadow:
+    0 15px 45px
+      color-mix(
+        in srgb,
+        var(--orbit-color) 18%,
+        transparent
+      );
+}
+
+.orbit-system {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: var(--orbit-size);
+  height: var(--orbit-size);
+
+  transform:
+    translate(-50%, -50%);
+
+  pointer-events: none;
+}
+
+.orbit-ring {
+  position: absolute;
+
+  inset: 0;
+
+  border:
+    var(--orbit-ring-border-width)
+    solid
+    var(--orbit-ring-color);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  transition:
+    opacity var(--orbit-ring-transition) ease;
+}
+
+.orbit-ring-one {
+  opacity: var(--orbit-ring-opacity);
+
+  transform:
+    rotateX(var(--orbit-ring-tilt));
+
+  border-style: dashed;
+}
+
+.orbit-ring-two {
+  inset: var(--orbit-outer-inset);
+
+  opacity: var(--orbit-outer-opacity);
+
+  border-color: var(--orbit-secondary-ring);
+
+  transform:
+    rotateX(var(--orbit-ring-tilt))
+    rotateZ(var(--orbit-outer-rotation));
+}
+
+.orbit-button:hover:not(:disabled)
+  .orbit-ring-one {
+  opacity: var(--orbit-ring-hover-opacity);
+}
+
+.orbit-button:hover:not(:disabled)
+  .orbit-ring-two {
+  opacity: var(--orbit-outer-hover-opacity);
+}
+
+.orbit-satellite {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 100%;
+  height: 100%;
+
+  transform-origin: center;
+
+  animation:
+    orbitRotation
+    var(--orbit-speed)
+    linear
+    infinite;
+
+  pointer-events: none;
+}
+
+.orbit-one {
+  transform:
+    translate(-50%, -50%);
+}
+
+.orbit-two {
+  transform:
+    translate(-50%, -50%)
+    rotate(120deg);
+
+  animation-direction: reverse;
+}
+
+.orbit-three {
+  transform:
+    translate(-50%, -50%)
+    rotate(240deg);
+
+  animation-duration:
+    var(--orbit-speed-third);
+}
+
+.orbit-dot {
+  position: absolute;
+
+  top: calc(
+    var(--orbit-satellite-size) / -2
+  );
+
+  left: 50%;
+
+  width: var(--orbit-satellite-size);
+  height: var(--orbit-satellite-size);
+
+  transform: translateX(-50%);
+
+  border-radius: 999px;
+
+  pointer-events: none;
+}
+
+.orbit-dot-one {
+  background: var(--orbit-satellite-color);
+
+  box-shadow:
+    0 0 var(--orbit-glow-size)
+      var(--orbit-satellite-color),
+    0 0 var(--orbit-outer-glow)
+      var(--orbit-satellite-color);
+}
+
+.orbit-dot-two {
+  background: var(--orbit-satellite-secondary);
+
+  box-shadow:
+    0 0 var(--orbit-glow-size)
+      var(--orbit-satellite-secondary),
+    0 0 var(--orbit-outer-glow)
+      var(--orbit-satellite-secondary);
+}
+
+.orbit-dot-three {
+  width: var(--orbit-small-satellite-size);
+  height: var(--orbit-small-satellite-size);
+
+  top: calc(
+    var(--orbit-small-satellite-size) / -2
+  );
+
+  background: var(--orbit-satellite-third);
+
+  box-shadow:
+    0 0 var(--orbit-small-glow)
+      var(--orbit-satellite-third),
+    0 0 var(--orbit-small-outer-glow)
+      var(--orbit-color);
+}
+
+.orbit-atmosphere {
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: inherit;
+
+  opacity: var(--orbit-atmosphere-opacity);
+
+  background:
+    radial-gradient(
+      circle at center,
+      color-mix(
+        in srgb,
+        var(--orbit-atmosphere-color) 13%,
+        transparent
+      ),
+      transparent var(--orbit-atmosphere-size)
+    );
+
+  pointer-events: none;
+
+  transition:
+    opacity 500ms ease;
+}
+
+.orbit-button:hover:not(:disabled)
+  .orbit-atmosphere {
+  opacity:
+    var(--orbit-atmosphere-hover-opacity);
+}
+
+.orbit-surface {
+  position: absolute;
+
+  inset: 0;
+
+  border:
+    var(--orbit-border-width)
+    solid
+    var(--orbit-border-color);
+
+  border-radius: inherit;
+
+  background: var(--orbit-background);
+
+  pointer-events: none;
+
+  transition:
+    border-color var(--orbit-transition) ease;
+}
+
+.orbit-button:hover:not(:disabled)
+  .orbit-surface {
+  border-color:
+    var(--orbit-hover-border-color);
+}
+
+.orbit-content {
+  position: relative;
+  z-index: 10;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  transition:
+    transform var(--orbit-transition) ease;
+}
+
+.orbit-button:hover:not(:disabled)
+  .orbit-content {
+  transform:
+    scale(var(--orbit-content-scale));
+}
+
+.orbit-button:active:not(:disabled) {
+  transform:
+    translateY(0)
+    scale(var(--orbit-active-scale));
+}
+
+.orbit-button:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+@keyframes orbitRotation {
+  from {
+    transform:
+      translate(-50%, -50%)
+      rotate(0deg);
+  }
+
+  to {
+    transform:
+      translate(-50%, -50%)
+      rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-satellite {
+    animation: none;
+  }
+
+  .orbit-button,
+  .orbit-ring,
+  .orbit-atmosphere,
+  .orbit-content {
+    transition: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .orbit-button {
+    max-width: 90vw;
+  }
+}

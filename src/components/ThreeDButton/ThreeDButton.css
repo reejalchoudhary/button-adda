@@ -1,0 +1,162 @@
+.button-adda-3d {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--button-width);
+  height: var(--button-height);
+  min-height: var(--button-height);
+
+  padding: 0;
+
+  overflow: hidden;
+
+  border: 0;
+  border-radius: var(--button-radius);
+
+  background: var(--button-color);
+  color: var(--button-text-color);
+
+  font-family: inherit;
+  font-size: var(--button-font-size);
+  font-weight: var(--button-font-weight);
+  letter-spacing: var(--button-letter-spacing);
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  box-shadow:
+    0
+    var(--button-depth)
+    0
+    color-mix(
+      in srgb,
+      var(--button-depth-color)
+        calc(var(--button-shadow-opacity) * 100%),
+      transparent
+    );
+
+  transform: translateY(0);
+
+  transition:
+    transform var(--button-transition) ease-out,
+    box-shadow var(--button-transition) ease-out,
+    filter var(--button-transition) ease,
+    opacity var(--button-transition) ease;
+}
+
+.button-adda-3d:hover:not(:disabled) {
+  transform:
+    translateY(
+      calc(
+        var(--button-hover-lift) * -1
+      )
+    );
+
+  filter: brightness(1.05);
+}
+
+.button-adda-3d:active:not(:disabled) {
+  transform:
+    translateY(var(--button-depth))
+    scale(var(--button-active-scale));
+
+  box-shadow:
+    0 0 0
+    var(--button-depth-color);
+}
+
+.button-adda-3d-highlight {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  height: var(--button-highlight-height);
+
+  border-radius: inherit;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      var(--button-highlight-opacity)
+    );
+
+  pointer-events: none;
+
+  z-index: 1;
+}
+
+.button-adda-3d-shine {
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: inherit;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      var(--button-hover-shine-opacity)
+    );
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  z-index: 2;
+
+  transition:
+    opacity var(--button-shine-duration) ease;
+}
+
+.button-adda-3d:hover:not(:disabled)
+  .button-adda-3d-shine {
+  opacity: 1;
+}
+
+.button-adda-3d-content {
+  position: relative;
+
+  z-index: 10;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+}
+
+.button-adda-3d:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.5;
+
+  pointer-events: none;
+}
+
+.button-adda-3d:focus-visible {
+  outline: 2px solid var(--button-text-color);
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .button-adda-3d {
+    max-width: 90vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button-adda-3d,
+  .button-adda-3d-shine {
+    transition-duration: 0.01ms !important;
+  }
+}

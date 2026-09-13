@@ -1,0 +1,188 @@
+.fire-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  border-style: solid;
+
+  font-size: var(--fire-font-size);
+  font-weight: var(--fire-font-weight);
+
+  cursor: pointer;
+  user-select: none;
+
+  transition:
+    transform 300ms ease,
+    opacity 300ms ease;
+}
+
+.fire-button:hover:not(:disabled) {
+  transform:
+    translateY(calc(var(--fire-hover-lift) * -1))
+    scale(var(--fire-hover-scale));
+}
+
+.fire-button:active:not(:disabled) {
+  transform:
+    translateY(0)
+    scale(var(--fire-active-scale));
+}
+
+.fire-button:disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.fire-button__outer-glow {
+  position: absolute;
+
+  inset: -32px;
+
+  border-radius: 9999px;
+
+  filter: blur(32px);
+
+  opacity: var(--fire-glow-opacity);
+
+  pointer-events: none;
+
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease;
+}
+
+.fire-button:hover:not(:disabled)
+.fire-button__outer-glow {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.fire-button__moving-fire {
+  position: absolute;
+
+  inset: -35%;
+
+  opacity: var(--fire-moving-opacity);
+
+  filter: blur(20px);
+
+  pointer-events: none;
+}
+
+.fire-button__inner-fire {
+  position: absolute;
+
+  inset: 2px;
+
+  border-radius: inherit;
+
+  pointer-events: none;
+}
+
+.fire-button__flame-streak {
+  position: absolute;
+
+  left: 50%;
+  bottom: -32px;
+
+  width: 75%;
+  height: 80px;
+
+  transform: translateX(-50%);
+
+  border-radius: 9999px;
+
+  filter: blur(20px);
+
+  opacity: var(--fire-streak-opacity);
+
+  pointer-events: none;
+}
+
+.fire-button__shine {
+  position: absolute;
+
+  left: -100%;
+  top: 0;
+
+  width: 33.333333%;
+  height: 100%;
+
+  transform: rotate(12deg);
+
+  background: rgba(255, 255, 255, var(--fire-shine-opacity));
+
+  filter: blur(6px);
+
+  transition:
+    left var(--fire-shine-duration) ease;
+  
+  pointer-events: none;
+}
+
+.fire-button:hover:not(:disabled)
+.fire-button__shine {
+  left: 130%;
+}
+
+.fire-button__content {
+  position: relative;
+  z-index: 10;
+
+  filter:
+    drop-shadow(
+      0 0 8px rgba(255, 180, 0, 0.8)
+    );
+}
+
+@keyframes buttonAddaFireGlow {
+  0%,
+  100% {
+    transform: scale(0.95);
+    opacity: 0.55;
+  }
+
+  50% {
+    transform: scale(1.08);
+    opacity: 0.9;
+  }
+}
+
+@keyframes buttonAddaFireSpin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(180deg) scale(1.08);
+  }
+
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes buttonAddaFirePulse {
+  0%,
+  100% {
+    transform: translateX(-50%) scaleX(0.8);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: translateX(-50%) scaleX(1.15);
+    opacity: 0.9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fire-button,
+  .fire-button * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

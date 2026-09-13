@@ -1,0 +1,291 @@
+.shimmer-button {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  border: none;
+  border-radius: var(--shimmer-radius);
+
+  background:
+    var(--shimmer-color-gradient);
+
+  color: var(--shimmer-text);
+
+  font-family:
+    Inter,
+    system-ui,
+    sans-serif;
+
+  font-size:
+    var(--shimmer-font-size);
+
+  font-weight:
+    var(--shimmer-font-weight);
+
+  letter-spacing:
+    var(--shimmer-letter-spacing);
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 25px
+    color-mix(
+      in srgb,
+      var(--shimmer-color)
+      33%,
+      transparent
+    );
+
+  transition:
+    transform var(--shimmer-transition) ease,
+    box-shadow var(--shimmer-transition) ease,
+    opacity var(--shimmer-transition) ease;
+}
+
+.shimmer-button:hover:not(:disabled) {
+  transform:
+    translateY(
+      calc(var(--shimmer-hover-lift) * -1)
+    );
+
+  box-shadow:
+    0 12px 35px
+    color-mix(
+      in srgb,
+      var(--shimmer-color)
+      50%,
+      transparent
+    );
+}
+
+.shimmer-button:active:not(:disabled) {
+  transform:
+    scale(var(--shimmer-active-scale));
+}
+
+.shimmer-button:disabled {
+  pointer-events: none;
+
+  cursor: not-allowed;
+
+  opacity: 0.5;
+}
+
+.shimmer-glow {
+  position: absolute;
+
+  inset: -20px;
+
+  z-index: -3;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--shimmer-color),
+      var(--shimmer-secondary)
+    );
+
+  filter:
+    blur(var(--shimmer-glow-blur));
+
+  opacity:
+    var(--shimmer-glow-opacity);
+
+  pointer-events: none;
+
+  transition:
+    opacity var(--shimmer-transition) ease,
+    filter var(--shimmer-transition) ease;
+}
+
+.shimmer-button:hover:not(:disabled)
+  .shimmer-glow {
+  opacity:
+    var(--shimmer-hover-glow-opacity);
+
+  filter:
+    blur(var(--shimmer-hover-glow-blur));
+}
+
+.shimmer-surface {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: -2;
+
+  border-radius: inherit;
+
+  background:
+    var(--shimmer-color-gradient);
+
+  pointer-events: none;
+}
+
+.shimmer-glass {
+  position: absolute;
+
+  inset: 1px;
+
+  z-index: 1;
+
+  border-radius:
+    calc(
+      var(--shimmer-radius) - 1px
+    );
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      var(--shimmer-glass-opacity)
+    );
+
+  backdrop-filter:
+    blur(var(--shimmer-glass-blur));
+
+  -webkit-backdrop-filter:
+    blur(var(--shimmer-glass-blur));
+
+  pointer-events: none;
+}
+
+.shimmer-streak {
+  position: absolute;
+
+  top: 0;
+  left: calc(
+    var(--shimmer-width) * -1
+  );
+
+  width: var(--shimmer-width);
+  height: 100%;
+
+  z-index: 5;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      transparent 20%,
+
+      color-mix(
+        in srgb,
+        var(--shimmer-light)
+        calc(
+          var(--shimmer-opacity) * 100%
+        ),
+        transparent
+      ) 50%,
+
+      transparent 80%,
+      transparent 100%
+    );
+
+  transform:
+    skewX(var(--shimmer-angle));
+
+  transition:
+    left var(--shimmer-speed) ease;
+}
+
+.shimmer-button:hover:not(:disabled)
+  .shimmer-streak {
+  left: 150%;
+}
+
+.shimmer-extra {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 4;
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(
+        255,
+        255,
+        255,
+        var(--extra-opacity)
+      ),
+      transparent
+    );
+
+  transition:
+    opacity var(--extra-speed) ease;
+}
+
+.shimmer-button:hover:not(:disabled)
+  .shimmer-extra {
+  opacity: 1;
+}
+
+.shimmer-border {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 8;
+
+  border:
+    var(--shimmer-border-width)
+    solid
+    var(--shimmer-border-color);
+
+  border-radius: inherit;
+
+  pointer-events: none;
+
+  transition:
+    border-color var(--shimmer-transition) ease;
+}
+
+.shimmer-button:hover:not(:disabled)
+  .shimmer-border {
+  border-color:
+    var(--shimmer-hover-border);
+}
+
+.shimmer-content {
+  position: relative;
+
+  z-index: 10;
+
+  pointer-events: none;
+
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .shimmer-button {
+    max-width: calc(100vw - 30px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer-button,
+  .shimmer-button * {
+    animation: none !important;
+
+    transition: none !important;
+  }
+}

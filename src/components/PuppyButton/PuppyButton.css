@@ -1,0 +1,813 @@
+.puppy-button {
+  position: relative;
+  border: none;
+  padding: 0;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  width: var(--button-width);
+  height: var(--button-height);
+
+  border-radius: var(--button-radius);
+
+  cursor: pointer;
+
+  background: transparent;
+
+  box-shadow:
+    var(--button-shadow),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.3s ease;
+
+  font-family:
+    Inter,
+    system-ui,
+    sans-serif;
+}
+
+.puppy-button:hover {
+  transform: translateY(var(--hover-lift));
+
+  box-shadow:
+    var(--button-hover-shadow),
+    inset 0 1px 2px rgba(255, 255, 255, 0.35);
+}
+
+.puppy-button:active {
+  transform: scale(var(--active-scale));
+}
+
+.puppy-button:disabled,
+.puppy-button.puppy-disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.puppy-background {
+  position: absolute;
+  inset: 0;
+
+  z-index: -10;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--color-1) 0%,
+      var(--color-2) 50%,
+      var(--color-3) 100%
+    );
+}
+
+.puppy-light {
+  position: absolute;
+
+  width: 100px;
+  height: 100px;
+
+  border-radius: 50%;
+
+  filter: blur(var(--puppy-light-blur));
+
+  opacity: var(--puppy-light-opacity);
+
+  pointer-events: none;
+
+  z-index: -2;
+}
+
+.puppy-light-one {
+  top: -50px;
+  left: 30px;
+
+  background: white;
+
+  animation:
+    puppy-light-move-one
+    5s
+    ease-in-out
+    infinite;
+}
+
+.puppy-light-two {
+  right: -40px;
+  bottom: -60px;
+
+  background: white;
+
+  animation:
+    puppy-light-move-two
+    6s
+    ease-in-out
+    infinite;
+}
+
+@keyframes puppy-light-move-one {
+  0%,
+  100% {
+    transform:
+      translateX(0)
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translateX(100px)
+      translateY(20px);
+  }
+}
+
+@keyframes puppy-light-move-two {
+  0%,
+  100% {
+    transform:
+      translateX(0);
+  }
+
+  50% {
+    transform:
+      translateX(-100px);
+  }
+}
+
+.tiny-cloud {
+  position: absolute;
+
+  width: 25px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: var(--cloud-color);
+
+  opacity: var(--cloud-opacity);
+
+  filter: blur(2px);
+
+  pointer-events: none;
+
+  animation:
+    cloud-float
+    5s
+    ease-in-out
+    infinite;
+}
+
+.cloud-one {
+  top: 18px;
+  left: 55%;
+}
+
+.cloud-two {
+  top: 27px;
+  left: 75%;
+
+  transform: scale(0.7);
+
+  animation-delay: -2s;
+}
+
+@keyframes cloud-float {
+  0%,
+  100% {
+    transform:
+      translateX(0);
+  }
+
+  50% {
+    transform:
+      translateX(10px);
+  }
+}
+
+.tiny-grass {
+  position: absolute;
+
+  bottom: 9px;
+
+  width: 2px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: var(--grass-color);
+
+  transform: rotate(22deg);
+
+  pointer-events: none;
+}
+
+.grass-one {
+  left: 15%;
+}
+
+.grass-two {
+  left: 43%;
+  height: 4px;
+}
+
+.grass-three {
+  left: 67%;
+
+  height: 5px;
+
+  transform: rotate(-18deg);
+}
+
+.grass-four {
+  left: 87%;
+
+  height: 4px;
+
+  transform: rotate(15deg);
+}
+
+.tiny-puppy {
+  position: absolute;
+
+  left: var(--puppy-position);
+  bottom: 10px;
+
+  width: var(--puppy-width);
+  height: var(--puppy-height);
+
+  z-index: 5;
+
+  transform:
+    translateX(-50%)
+    scaleX(var(--puppy-direction))
+    scale(var(--puppy-scale));
+
+  transform-origin:
+    center bottom;
+
+  pointer-events: none;
+
+  transition:
+    left 0.05s linear;
+}
+
+.tiny-puppy-svg {
+  width: 100%;
+  height: 100%;
+
+  overflow: visible;
+}
+
+.tiny-puppy-shadow {
+  opacity: var(--puppy-shadow-opacity);
+
+  transform-origin: center;
+
+  transition:
+    transform 0.3s ease;
+}
+
+.puppy-idle {
+  animation:
+    tiny-breathe
+    2s
+    ease-in-out
+    infinite;
+}
+
+@keyframes tiny-breathe {
+  0%,
+  100% {
+    transform:
+      translateX(-50%)
+      scaleX(var(--puppy-direction))
+      scale(var(--puppy-scale))
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translateX(-50%)
+      scaleX(var(--puppy-direction))
+      scale(var(--puppy-scale))
+      translateY(-1px);
+  }
+}
+
+.puppy-walk .tiny-front-legs {
+  animation:
+    tiny-front-walk
+    0.24s
+    ease-in-out
+    infinite
+    alternate;
+}
+
+.puppy-walk .tiny-back-legs {
+  animation:
+    tiny-back-walk
+    0.24s
+    ease-in-out
+    infinite
+    alternate;
+}
+
+@keyframes tiny-front-walk {
+  from {
+    transform: rotate(8deg);
+
+    transform-origin:
+      34px 47px;
+  }
+
+  to {
+    transform: rotate(-8deg);
+
+    transform-origin:
+      34px 47px;
+  }
+}
+
+@keyframes tiny-back-walk {
+  from {
+    transform: rotate(-8deg);
+
+    transform-origin:
+      60px 46px;
+  }
+
+  to {
+    transform: rotate(8deg);
+
+    transform-origin:
+      60px 46px;
+  }
+}
+
+.tiny-puppy-tail {
+  transform-origin:
+    69px 36px;
+
+  animation:
+    tiny-tail
+    1.1s
+    ease-in-out
+    infinite
+    alternate;
+}
+
+@keyframes tiny-tail {
+  from {
+    transform:
+      rotate(-13deg);
+  }
+
+  to {
+    transform:
+      rotate(17deg);
+  }
+}
+
+.puppy-sniff .tiny-puppy-head {
+  animation:
+    tiny-sniff
+    0.5s
+    ease-in-out
+    infinite
+    alternate;
+}
+
+@keyframes tiny-sniff {
+  from {
+    transform:
+      rotate(-2deg)
+      translateY(0);
+  }
+
+  to {
+    transform:
+      rotate(5deg)
+      translateY(3px);
+  }
+}
+
+.puppy-sit {
+  transform:
+    translateX(-50%)
+    scaleX(var(--puppy-direction))
+    scale(var(--puppy-scale))
+    translateY(5px);
+}
+
+.puppy-sit .tiny-back-legs {
+  transform:
+    translateY(4px);
+}
+
+.puppy-look .tiny-puppy-head {
+  animation:
+    tiny-look
+    1.7s
+    ease-in-out
+    infinite;
+}
+
+@keyframes tiny-look {
+  0%,
+  100% {
+    transform:
+      rotate(0);
+  }
+
+  30% {
+    transform:
+      rotate(-7deg);
+  }
+
+  65% {
+    transform:
+      rotate(7deg);
+  }
+}
+
+.puppy-wag .tiny-puppy-tail {
+  animation:
+    crazy-wag
+    0.16s
+    ease-in-out
+    infinite
+    alternate;
+}
+
+@keyframes crazy-wag {
+  from {
+    transform:
+      rotate(-23deg);
+  }
+
+  to {
+    transform:
+      rotate(25deg);
+  }
+}
+
+.tiny-tongue {
+  animation:
+    tongue
+    1.3s
+    ease-in-out
+    infinite
+    alternate;
+}
+
+@keyframes tongue {
+  from {
+    transform:
+      translateY(0);
+  }
+
+  to {
+    transform:
+      translateY(1px);
+  }
+}
+
+.puppy-button-label {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  z-index: 8;
+
+  color: var(--button-text-color);
+
+  font-size: var(--button-font-size);
+  font-weight: var(--button-font-weight);
+
+  letter-spacing:
+    var(--button-letter-spacing);
+
+  white-space: nowrap;
+
+  text-shadow:
+    var(--button-text-shadow);
+
+  pointer-events: none;
+
+  transition:
+    transform 0.25s ease;
+}
+
+.puppy-button:hover .puppy-button-label {
+  transform:
+    translate(-50%, -50%)
+    translateY(-2px);
+}
+
+.puppy-is-jumping .tiny-puppy {
+  animation:
+    puppy-happy-jump
+    1.35s
+    cubic-bezier(.22, 1, .36, 1)
+    forwards;
+}
+
+@keyframes puppy-happy-jump {
+  0% {
+    transform:
+      translateX(-50%)
+      scaleX(var(--puppy-direction))
+      scale(var(--puppy-scale))
+      translateY(0)
+      rotate(0);
+  }
+
+  10% {
+    transform:
+      translateX(-50%)
+      scaleX(var(--puppy-direction))
+      scale(var(--puppy-scale))
+      translateY(3px)
+      scaleY(.82);
+  }
+
+  25% {
+    transform:
+      translateX(-50%)
+      scaleX(var(--puppy-direction))
+      scale(var(--puppy-scale))
+      translateY(-18px)
+      scaleY(1.05)
+      rotate(-5deg);
+  }
+
+  42% {
+    transform:
+      translateX(-50%)
+      scaleX(var(--puppy-direction))
+      scale(var(--puppy-scale))
+      translateY(-31px)
+      scaleY(1.08)
+      rotate(5deg);
+  }
+
+  57% {
+    transform:
+      translateX(-50%)
+      scaleX(var(--puppy-direction))
+      scale(var(--puppy-scale))
+      translateY(-20px)
+      rotate(-4deg);
+  }
+
+  72% {
+    transform:
+      translateX(-50%)
+      scaleX(var(--puppy-direction))
+      scale(var(--puppy-scale))
+      translateY(1px)
+      scaleY(.85);
+  }
+
+  82% {
+    transform:
+      translateX(-50%)
+      scaleX(var(--puppy-direction))
+      scale(var(--puppy-scale))
+      translateY(-4px)
+      scaleY(1.02);
+  }
+
+  100% {
+    transform:
+      translateX(-50%)
+      scaleX(var(--puppy-direction))
+      scale(var(--puppy-scale))
+      translateY(0)
+      scaleY(1);
+  }
+}
+
+.puppy-is-jumping .tiny-ear-left {
+  animation:
+    happy-left-ear
+    0.27s
+    ease-in-out
+    4;
+}
+
+.puppy-is-jumping .tiny-ear-right {
+  animation:
+    happy-right-ear
+    0.27s
+    ease-in-out
+    4;
+}
+
+@keyframes happy-left-ear {
+  50% {
+    transform:
+      rotate(-22deg)
+      translateY(-3px);
+  }
+}
+
+@keyframes happy-right-ear {
+  50% {
+    transform:
+      rotate(22deg)
+      translateY(-3px);
+  }
+}
+
+.puppy-is-jumping .tiny-puppy-tail {
+  animation:
+    jump-tail
+    0.12s
+    ease-in-out
+    infinite
+    alternate;
+}
+
+@keyframes jump-tail {
+  from {
+    transform:
+      rotate(-30deg);
+  }
+
+  to {
+    transform:
+      rotate(35deg);
+  }
+}
+
+.puppy-celebration {
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  z-index: 12;
+}
+
+.puppy-celebration i {
+  position: absolute;
+
+  left: 15%;
+  bottom: 25%;
+
+  opacity: 0;
+
+  font-style: normal;
+
+  color: var(--celebration-color);
+
+  font-size: var(--celebration-size);
+}
+
+.puppy-is-jumping .puppy-celebration i {
+  animation:
+    puppy-celebrate
+    1.1s
+    ease-out
+    forwards;
+}
+
+.puppy-celebration i:nth-child(1) {
+  --x: -15px;
+  --y: -30px;
+}
+
+.puppy-celebration i:nth-child(2) {
+  --x: 8px;
+  --y: -40px;
+}
+
+.puppy-celebration i:nth-child(3) {
+  --x: 30px;
+  --y: -28px;
+}
+
+.puppy-celebration i:nth-child(4) {
+  --x: 48px;
+  --y: -43px;
+}
+
+.puppy-celebration i:nth-child(5) {
+  --x: 65px;
+  --y: -22px;
+}
+
+@keyframes puppy-celebrate {
+  0% {
+    opacity: 0;
+
+    transform:
+      translate(0, 0)
+      scale(.2)
+      rotate(0);
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(
+        var(--x),
+        var(--y)
+      )
+      scale(1)
+      rotate(90deg);
+  }
+}
+
+.puppy-pawprints {
+  position: absolute;
+
+  left: 8%;
+  bottom: 12px;
+
+  z-index: 3;
+
+  display: flex;
+
+  gap: 13px;
+
+  pointer-events: none;
+}
+
+.puppy-pawprints i {
+  opacity: 0;
+
+  font-style: normal;
+
+  color: var(--paw-color);
+
+  font-size: var(--paw-size);
+}
+
+.puppy-is-jumping .puppy-pawprints i {
+  animation:
+    tiny-paw
+    0.9s
+    ease-out
+    forwards;
+}
+
+.puppy-pawprints i:nth-child(2) {
+  animation-delay: .12s;
+}
+
+.puppy-pawprints i:nth-child(3) {
+  animation-delay: .24s;
+}
+
+@keyframes tiny-paw {
+  0% {
+    opacity: 0;
+
+    transform:
+      translateY(5px)
+      scale(.3);
+  }
+
+  35% {
+    opacity: .5;
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translateY(-3px)
+      scale(1);
+  }
+}
+
+@media (max-width: 480px) {
+  .puppy-button {
+    max-width: calc(100vw - 30px);
+  }
+
+  .puppy-button-label {
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .puppy-button *,
+  .puppy-button {
+    animation: none !important;
+    transition: none !important;
+  }
+}

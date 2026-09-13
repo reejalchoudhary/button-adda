@@ -1,0 +1,700 @@
+.blackhole-button {
+
+  --gravity-x: 0px;
+  --gravity-y: 0px;
+
+  position: relative;
+
+  width: var(--blackhole-width);
+  height: var(--blackhole-height);
+
+  min-width: var(--blackhole-width);
+  min-height: var(--blackhole-height);
+
+  max-width: 100%;
+
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  box-sizing: border-box;
+
+  border: 0;
+
+  border-radius: var(--blackhole-radius);
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #1f2937 0%,
+      #111827 28%,
+      #020617 62%,
+      #000000 100%
+    );
+
+  color: var(--blackhole-text-color);
+
+  font-family: inherit;
+
+  cursor: pointer;
+
+  isolation: isolate;
+
+  overflow: visible;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  transform:
+    translate(
+      var(--gravity-x),
+      var(--gravity-y)
+    );
+
+  transition:
+    transform 80ms linear;
+
+  box-shadow:
+    0 0 0 1px
+      rgba(255, 255, 255, 0.08),
+
+    inset 0 3px 8px
+      rgba(255, 255, 255, 0.06),
+
+    inset 0 -8px 15px
+      rgba(0, 0, 0, 0.8),
+
+    0 15px 40px
+      rgba(0, 0, 0, 0.5);
+}
+
+.gravity-field {
+  position: absolute;
+
+  width: calc(100% + 36px);
+  height: calc(100% + 36px);
+
+  left: -18px;
+  top: -18px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      transparent 35%,
+
+      color-mix(
+        in srgb,
+        var(--blackhole-color) 8%,
+        transparent
+      ) 48%,
+
+      color-mix(
+        in srgb,
+        var(--blackhole-color) 5%,
+        transparent
+      ) 58%,
+
+      transparent 72%
+    );
+
+  opacity: 0;
+
+  transform: scale(0.7);
+
+  transition:
+    opacity 350ms ease,
+    transform 600ms
+      cubic-bezier(
+        0.22,
+        1,
+        0.36,
+        1
+      );
+
+  pointer-events: none;
+
+  z-index: 1;
+}
+
+
+.gravity-active
+.gravity-field {
+  opacity:
+    calc(
+      0.25 +
+      var(--gravity-progress) * 0.75
+    );
+
+  transform:
+    scale(
+      calc(
+        0.7 +
+        var(--gravity-progress) * 0.45
+      )
+    );
+}
+
+.gravity-orbit {
+  position: absolute;
+
+  width: calc(100% + 14px);
+  height: calc(100% + 14px);
+
+  left: -7px;
+  top: -7px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--blackhole-color) 30%,
+      transparent
+    );
+
+  transform:
+    rotateX(65deg)
+    rotateZ(0deg);
+
+  opacity: 0.4;
+
+  pointer-events: none;
+
+  z-index: 2;
+}
+
+
+.gravity-orbit i {
+  position: absolute;
+
+  width: 6px;
+  height: 6px;
+
+  left: 50%;
+  top: -3px;
+
+  margin-left: -3px;
+
+  border-radius: 50%;
+
+  background:
+    var(--blackhole-color);
+
+  box-shadow:
+    0 0 10px
+      color-mix(
+        in srgb,
+        var(--blackhole-color) 90%,
+        transparent
+      );
+}
+
+
+.gravity-active
+.gravity-orbit {
+  opacity:
+    calc(
+      0.35 +
+      var(--gravity-progress) * 0.65
+    );
+
+  animation:
+    gravity-orbit-spin
+    calc(
+      3s -
+      var(--gravity-progress) * 2s
+    )
+    linear
+    infinite;
+}
+
+
+@keyframes gravity-orbit-spin {
+  to {
+    transform:
+      rotateX(65deg)
+      rotateZ(360deg);
+  }
+}
+
+
+.gravity-hole {
+  position: absolute;
+
+  z-index: 3;
+
+  width: 48%;
+  height: 48%;
+
+  left: 26%;
+  top: 26%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #000000;
+
+  box-shadow:
+    0 0 18px
+      rgba(0, 0, 0, 0.95),
+
+    0 0 30px
+      color-mix(
+        in srgb,
+        var(--blackhole-color) 18%,
+        transparent
+      ),
+
+    inset 0 0 15px
+      rgba(0, 0, 0, 1);
+
+  transition:
+    transform 300ms
+      cubic-bezier(
+        0.22,
+        1,
+        0.36,
+        1
+      );
+
+  pointer-events: none;
+}
+
+
+.gravity-hole-core {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #000000;
+
+  box-shadow:
+    0 0 8px
+      rgba(255, 255, 255, 0.2);
+}
+
+
+.gravity-active
+.gravity-hole {
+  transform:
+    scale(
+      calc(
+        1 +
+        var(--gravity-progress) * 0.22
+      )
+    );
+}
+
+
+.gravity-active
+.gravity-hole-core {
+  transform:
+    scale(
+      calc(
+        1 -
+        var(--gravity-progress) * 0.45
+      )
+    );
+}
+
+
+.gravity-content {
+  position: absolute;
+
+  z-index: 20;
+
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 3px;
+
+  pointer-events: none;
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+}
+
+
+.gravity-label {
+  position: relative;
+
+  z-index: 21;
+
+  display: block;
+
+  width: 90%;
+
+  overflow: hidden;
+
+  color:
+    var(--blackhole-text-color);
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  line-height: 1.2;
+
+  letter-spacing: 0.02em;
+
+  text-align: center;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+
+  pointer-events: none;
+
+  transition:
+    transform 200ms ease,
+    opacity 200ms ease;
+}
+
+
+.gravity-active
+.gravity-label {
+  transform:
+    scale(
+      calc(
+        1 -
+        var(--gravity-progress) * 0.25
+      )
+    );
+}
+
+.gravity-ready {
+  position: relative;
+
+  z-index: 22;
+
+  color:
+    var(--blackhole-color);
+
+  font-size: 7px;
+
+  font-weight: 900;
+
+  line-height: 1;
+
+  letter-spacing: 0.12em;
+
+  opacity: 0.8;
+
+  animation:
+    gravity-ready-pulse
+    500ms
+    ease-in-out
+    infinite
+    alternate;
+}
+
+
+@keyframes gravity-ready-pulse {
+  from {
+    opacity: 0.35;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.gravity-snapping {
+  animation:
+    gravity-shake
+    90ms
+    linear
+    infinite
+    alternate;
+}
+
+
+@keyframes gravity-shake {
+  from {
+    transform:
+      translate(
+        calc(var(--gravity-x) - 1px),
+        calc(var(--gravity-y) + 1px)
+      );
+  }
+
+  to {
+    transform:
+      translate(
+        calc(var(--gravity-x) + 1px),
+        calc(var(--gravity-y) - 1px)
+      );
+  }
+}
+
+.gravity-activated {
+  animation:
+    gravity-collapse
+    900ms
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
+}
+
+
+@keyframes gravity-collapse {
+  0% {
+    transform:
+      translate(
+        var(--gravity-x),
+        var(--gravity-y)
+      )
+      scale(1);
+  }
+
+  25% {
+    transform:
+      translate(
+        var(--gravity-x),
+        var(--gravity-y)
+      )
+      scale(0.9);
+  }
+
+  45% {
+    transform:
+      translate(
+        var(--gravity-x),
+        var(--gravity-y)
+      )
+      scale(0.55);
+  }
+
+  58% {
+    transform:
+      translate(
+        var(--gravity-x),
+        var(--gravity-y)
+      )
+      scale(0.3);
+  }
+
+  72% {
+    transform:
+      translate(
+        var(--gravity-x),
+        var(--gravity-y)
+      )
+      scale(1.2);
+  }
+
+  100% {
+    transform:
+      translate(0, 0)
+      scale(1);
+  }
+}
+
+
+.gravity-burst {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 0;
+  height: 0;
+
+  z-index: 30;
+
+  pointer-events: none;
+}
+
+
+.gravity-burst i {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 4px;
+  height: 4px;
+
+  margin-left: -2px;
+  margin-top: -2px;
+
+  border-radius: 50%;
+
+  background:
+    var(--blackhole-color);
+
+  opacity: 0;
+}
+
+
+.gravity-activated
+.gravity-burst i {
+  animation:
+    gravity-burst
+    700ms
+    ease-out;
+}
+
+
+.gravity-burst i:nth-child(1) {
+  --x: -70px;
+  --y: 0px;
+}
+
+.gravity-burst i:nth-child(2) {
+  --x: 70px;
+  --y: 0px;
+}
+
+.gravity-burst i:nth-child(3) {
+  --x: 0px;
+  --y: -70px;
+}
+
+.gravity-burst i:nth-child(4) {
+  --x: 0px;
+  --y: 70px;
+}
+
+.gravity-burst i:nth-child(5) {
+  --x: -50px;
+  --y: -50px;
+}
+
+.gravity-burst i:nth-child(6) {
+  --x: 50px;
+  --y: -50px;
+}
+
+.gravity-burst i:nth-child(7) {
+  --x: -50px;
+  --y: 50px;
+}
+
+.gravity-burst i:nth-child(8) {
+  --x: 50px;
+  --y: 50px;
+}
+
+.gravity-burst i:nth-child(9) {
+  --x: -80px;
+  --y: -25px;
+}
+
+.gravity-burst i:nth-child(10) {
+  --x: 80px;
+  --y: 25px;
+}
+
+.gravity-burst i:nth-child(11) {
+  --x: -25px;
+  --y: 80px;
+}
+
+.gravity-burst i:nth-child(12) {
+  --x: 25px;
+  --y: -80px;
+}
+
+
+@keyframes gravity-burst {
+  0% {
+    opacity: 0;
+
+    transform:
+      translate(0, 0)
+      scale(0);
+  }
+
+  25% {
+    opacity: 1;
+
+    transform:
+      translate(
+        calc(var(--x) * 0.35),
+        calc(var(--y) * 0.35)
+      )
+      scale(1.3);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(
+        var(--x),
+        var(--y)
+      )
+      scale(0);
+  }
+}
+
+
+.blackhole-button:active {
+  transform:
+    translate(
+      var(--gravity-x),
+      var(--gravity-y)
+    )
+    scale(0.94);
+}
+
+.blackhole-button:focus-visible {
+  outline:
+    2px solid
+    var(--blackhole-color);
+
+  outline-offset: 4px;
+}
+
+
+.blackhole-button:disabled {
+  opacity: 0.4;
+
+  cursor: not-allowed;
+
+  pointer-events: none;
+}
+
+@media (max-width: 480px) {
+  .blackhole-button {
+    max-width: 90vw;
+    max-height: 90vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blackhole-button,
+  .blackhole-button * {
+    animation: none !important;
+
+    transition: none !important;
+  }
+}

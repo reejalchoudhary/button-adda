@@ -1,0 +1,221 @@
+.neon-button {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--neon-width);
+  height: var(--neon-height);
+  min-height: var(--neon-height);
+
+  padding: 0;
+  overflow: hidden;
+
+  border:
+    var(--neon-border-width)
+    solid
+    var(--neon-color);
+
+  border-radius: var(--neon-radius);
+
+  background-color: var(--neon-background);
+  color: var(--neon-text-color);
+
+  font-size: var(--neon-font-size);
+  font-weight: var(--neon-font-weight);
+  letter-spacing: var(--neon-letter-spacing);
+
+  cursor: pointer;
+
+  box-shadow:
+    0 0 var(--neon-glow)
+      color-mix(
+        in srgb,
+        var(--neon-color)
+          calc(var(--neon-glow-opacity) * 100%),
+        transparent
+      ),
+    inset 0 0 calc(var(--neon-glow) / 2)
+      color-mix(
+        in srgb,
+        var(--neon-color) 20%,
+        transparent
+      );
+
+  transition:
+    transform 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.neon-button:hover:not(:disabled) {
+  transform: translateY(
+    calc(var(--neon-hover-lift) * -1)
+  );
+
+  box-shadow:
+    0 0 var(--neon-glow)
+      color-mix(
+        in srgb,
+        var(--neon-color)
+          calc(var(--neon-glow-opacity) * 100%),
+        transparent
+      ),
+    0 0 calc(var(--neon-glow) * 1.5)
+      color-mix(
+        in srgb,
+        var(--neon-color) 35%,
+        transparent
+      ),
+    inset 0 0 calc(var(--neon-glow) / 2)
+      color-mix(
+        in srgb,
+        var(--neon-color) 30%,
+        transparent
+      );
+}
+
+.neon-border-glow {
+  position: absolute;
+  inset: 0;
+
+  border-radius: inherit;
+
+  opacity: var(--neon-border-opacity);
+
+  filter: blur(var(--neon-border-blur));
+
+  pointer-events: none;
+
+  box-shadow:
+    inset 0 0 var(--neon-border-glow-size)
+      var(--neon-color),
+    0 0 var(--neon-border-glow-size)
+      var(--neon-color);
+
+  transition:
+    opacity 300ms ease,
+    filter 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.neon-button:hover:not(:disabled)
+  .neon-border-glow {
+  opacity: var(--neon-border-hover-opacity);
+
+  filter: blur(var(--neon-border-hover-blur));
+
+  box-shadow:
+    inset 0 0 var(--neon-border-hover-size)
+      var(--neon-color),
+    0 0 var(--neon-border-hover-size)
+      var(--neon-color);
+}
+
+.neon-inner-glow {
+  position: absolute;
+  inset: 0;
+
+  border-radius: inherit;
+
+  background-color: var(--neon-color);
+
+  opacity: var(--neon-inner-opacity);
+
+  filter: blur(var(--neon-inner-blur));
+
+  pointer-events: none;
+
+  transition:
+    opacity 300ms ease;
+}
+
+.neon-button:hover:not(:disabled)
+  .neon-inner-glow {
+  opacity: var(--neon-inner-hover-opacity);
+}
+
+.neon-streak {
+  position: absolute;
+
+  left: -50%;
+  top: 0;
+
+  width: var(--neon-streak-width);
+  height: 100%;
+
+  transform: rotate(var(--neon-streak-angle));
+
+  background-color: var(--neon-streak-color);
+
+  opacity: var(--neon-streak-opacity);
+
+  filter: blur(var(--neon-streak-blur));
+
+  pointer-events: none;
+
+  transition:
+    left var(--neon-streak-speed) ease;
+}
+
+.neon-button:hover:not(:disabled)
+  .neon-streak {
+  left: var(--neon-streak-end);
+}
+
+.neon-content {
+  position: relative;
+  z-index: 10;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  transition:
+    filter 300ms ease;
+}
+
+.neon-content-glow {
+  filter:
+    drop-shadow(
+      0 0 var(--neon-text-glow-size)
+      currentColor
+    );
+}
+
+.neon-button:hover:not(:disabled)
+  .neon-content-glow {
+  filter:
+    drop-shadow(
+      0 0 calc(var(--neon-text-glow-size) * 1.4)
+      currentColor
+    );
+}
+
+.neon-button:active:not(:disabled) {
+  transform:
+    translateY(0)
+    scale(var(--neon-active-scale));
+}
+
+.neon-button:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .neon-button,
+  .neon-border-glow,
+  .neon-inner-glow,
+  .neon-streak,
+  .neon-content {
+    transition: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .neon-button {
+    max-width: 90vw;
+  }
+}

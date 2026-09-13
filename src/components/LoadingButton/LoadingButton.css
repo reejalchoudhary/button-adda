@@ -1,0 +1,172 @@
+.loading-button {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  padding: 0;
+
+  border: none;
+  outline: none;
+
+  font-family: inherit;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 30px
+    color-mix(
+      in srgb,
+      var(--loading-color)
+      calc(var(--loading-shadow-opacity) * 100%),
+      transparent
+    );
+
+  transition:
+    transform 300ms ease,
+    box-shadow 300ms ease,
+    opacity 300ms ease;
+}
+
+.loading-button:hover:not(:disabled) {
+  transform:
+    translateY(
+      calc(var(--loading-hover-lift) * -1)
+    );
+}
+
+.loading-button:active:not(:disabled) {
+  transform:
+    scale(var(--loading-active-scale));
+}
+
+.loading-button:disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.loading-hover-glow {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    rgb(
+      255 255 255 /
+      var(--loading-hover-glow-opacity)
+    );
+
+  opacity: 0;
+
+  transition:
+    opacity 300ms ease;
+
+  pointer-events: none;
+}
+
+.loading-button:hover:not(:disabled)
+  .loading-hover-glow {
+  opacity: 1;
+}
+
+.loading-progress-track {
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+  height: 4px;
+
+  background:
+    var(--loading-track-color);
+
+  overflow: hidden;
+
+  pointer-events: none;
+}
+
+.loading-progress-fill {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: var(--loading-progress);
+  height: 100%;
+
+  background:
+    var(--loading-progress-color);
+
+  transition:
+    width 80ms linear;
+
+  box-shadow:
+    0 0 10px
+    var(--loading-progress-color);
+}
+
+.loading-spinner {
+  position: relative;
+  z-index: 10;
+
+  flex-shrink: 0;
+
+  width: var(--loading-spinner-size);
+  height: var(--loading-spinner-size);
+
+  border:
+    var(--loading-spinner-border)
+    solid
+    rgb(255 255 255 / 0.3);
+
+  border-top-color:
+    var(--loading-text-color);
+
+  border-radius: 50%;
+
+  animation:
+    loadingButtonSpin
+    0.8s
+    linear
+    infinite;
+}
+
+.loading-content {
+  position: relative;
+  z-index: 10;
+
+  white-space: nowrap;
+
+  line-height: 1;
+}
+
+@keyframes loadingButtonSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-spinner {
+    animation: none;
+  }
+
+  .loading-button {
+    transition: none;
+  }
+
+  .loading-progress-fill {
+    transition: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .loading-button {
+    max-width: 90vw;
+  }
+}

@@ -1,0 +1,360 @@
+.particle-button {
+  position: relative;
+  isolation: isolate;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--particle-width);
+  height: var(--particle-height);
+
+  padding: 0;
+  overflow: visible;
+
+  border:
+    var(--particle-border-width)
+    solid
+    var(--particle-border-color);
+
+  border-radius: var(--particle-radius);
+
+  background:
+    var(--particle-background);
+
+  color: var(--particle-text-color);
+
+  font-size: var(--particle-font-size);
+  font-weight: var(--particle-font-weight);
+  letter-spacing: var(--particle-letter-spacing);
+
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 25px
+    rgba(0, 0, 0, 0.25);
+
+  transition:
+    transform var(--particle-transition) ease,
+    box-shadow var(--particle-transition) ease,
+    border-color var(--particle-transition) ease;
+}
+
+.particle-button:hover:not(:disabled) {
+  transform:
+    translateY(
+      calc(
+        var(--particle-hover-lift) * -1
+      )
+    );
+
+  border-color:
+    var(--particle-hover-border-color);
+
+  box-shadow:
+    0 15px 35px
+      rgba(0, 0, 0, 0.35),
+    0 0 var(--particle-hover-glow-size)
+      color-mix(
+        in srgb,
+        var(--particle-main-color) 35%,
+        transparent
+      );
+}
+
+.particle-field {
+  position: absolute;
+  inset: 0;
+
+  overflow: visible;
+
+  pointer-events: none;
+
+  z-index: 3;
+}
+
+.particle-dot {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 4px;
+  height: 4px;
+
+  transform:
+    translate(-50%, -50%)
+    translate(0, 0)
+    scale(0);
+
+  border-radius: 50%;
+
+  opacity: 0;
+
+  filter:
+    blur(var(--particle-blur));
+
+  pointer-events: none;
+
+  will-change:
+    transform,
+    opacity;
+
+  transition:
+    transform var(--particle-duration)
+      cubic-bezier(
+        0.2,
+        0.8,
+        0.2,
+        1
+      ),
+    opacity 300ms ease;
+}
+
+.particle-dot.particle-active {
+  transform:
+    translate(-50%, -50%)
+    translate(
+      var(--particle-x),
+      var(--particle-y)
+    )
+    rotate(var(--particle-rotation))
+    scale(1);
+
+  opacity:
+    var(--particle-opacity);
+
+  transition-delay:
+    var(--particle-delay);
+}
+
+.particle-dot.particle-burst {
+  animation:
+    particleExplosion
+    var(--particle-explosion-duration)
+    cubic-bezier(
+      0.15,
+      0.85,
+      0.25,
+      1
+    )
+    forwards;
+
+  transition: none;
+}
+
+@keyframes particleExplosion {
+
+  0% {
+    transform:
+      translate(-50%, -50%)
+      translate(0, 0)
+      scale(1);
+
+    opacity: 1;
+  }
+
+  70% {
+    transform:
+      translate(-50%, -50%)
+      translate(
+        calc(
+          var(--particle-x) * 1.8
+        ),
+        calc(
+          var(--particle-y) * 1.8
+        )
+      )
+      rotate(
+        calc(
+          var(--particle-rotation) * 2
+        )
+      )
+      scale(0.7);
+
+    opacity: 0.7;
+  }
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      translate(
+        calc(
+          var(--particle-x)
+          * var(--particle-explosion-multiplier)
+        ),
+        calc(
+          var(--particle-y)
+          * var(--particle-explosion-multiplier)
+        )
+      )
+      rotate(
+        calc(
+          var(--particle-rotation) * 4
+        )
+      )
+      scale(0);
+
+    opacity: 0;
+  }
+}
+
+.particle-edge {
+  position: absolute;
+  inset: 0;
+
+  z-index: 4;
+
+  box-sizing: border-box;
+
+  border:
+    var(--particle-edge-width)
+    var(--particle-edge-style)
+    var(--particle-edge-color);
+
+  border-radius: inherit;
+
+  opacity:
+    var(--particle-edge-opacity);
+
+  pointer-events: none;
+
+  transition:
+    opacity var(--particle-transition) ease;
+}
+
+.particle-button:hover:not(:disabled)
+  .particle-edge {
+  opacity:
+    var(--particle-edge-hover-opacity);
+}
+
+.particle-glow {
+  position: absolute;
+
+  inset: -2px;
+
+  z-index: 2;
+
+  border-radius: inherit;
+
+  background:
+    radial-gradient(
+      circle at center,
+      var(--particle-main-color),
+      transparent 70%
+    );
+
+  opacity:
+    var(--particle-glow-opacity);
+
+  filter:
+    blur(var(--particle-glow-size));
+
+  pointer-events: none;
+
+  transition:
+    opacity var(--particle-transition) ease,
+    filter var(--particle-transition) ease;
+}
+
+.particle-button:hover:not(:disabled)
+  .particle-glow {
+  opacity:
+    var(--particle-glow-hover-opacity);
+
+  filter:
+    blur(var(--particle-hover-glow-size));
+}
+
+.particle-surface {
+  position: absolute;
+  inset: 0;
+
+  z-index: 5;
+
+  box-sizing: border-box;
+
+  border:
+    var(--particle-border-width)
+    solid
+    color-mix(
+      in srgb,
+      var(--particle-color)
+      calc(
+        var(--particle-surface-border-opacity, 0.1)
+        * 100%
+      ),
+      transparent
+    );
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(
+        in srgb,
+        var(--particle-main-color) 10%,
+        transparent
+      ),
+      transparent 60%
+    );
+
+  pointer-events: none;
+}
+
+.particle-content {
+  position: relative;
+
+  z-index: 10;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  transition:
+    transform var(--particle-transition) ease;
+}
+
+.particle-content-active {
+  transform:
+    scale(var(--particle-content-scale));
+}
+
+.particle-button:active:not(:disabled) {
+  transform:
+    translateY(0)
+    scale(
+      var(--particle-active-scale)
+    );
+}
+
+.particle-button:disabled {
+  cursor: not-allowed;
+
+  pointer-events: none;
+
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .particle-button,
+  .particle-dot,
+  .particle-edge,
+  .particle-glow,
+  .particle-content {
+    transition: none !important;
+  }
+
+  .particle-dot.particle-burst {
+    animation: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .particle-button {
+    max-width: 90vw;
+  }
+}

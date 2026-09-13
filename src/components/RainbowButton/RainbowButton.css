@@ -1,0 +1,270 @@
+.rainbow-button {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  border: none;
+  border-radius: var(--rainbow-radius);
+
+  background: transparent;
+
+  color: var(--rainbow-text-color);
+
+  font-family:
+    Inter,
+    system-ui,
+    sans-serif;
+
+  font-size: var(--rainbow-font-size);
+  font-weight: var(--rainbow-font-weight);
+  letter-spacing: var(--rainbow-letter-spacing);
+
+  cursor: pointer;
+
+  transition:
+    transform 300ms ease,
+    box-shadow 300ms ease,
+    opacity 300ms ease;
+}
+
+.rainbow-button:hover:not(:disabled) {
+  transform:
+    translateY(calc(var(--rainbow-hover-lift) * -1px))
+    scale(var(--rainbow-hover-scale));
+}
+
+.rainbow-button:active:not(:disabled) {
+  transform: scale(var(--rainbow-active-scale));
+}
+
+.rainbow-button:disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.rainbow-border {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: -4;
+
+  border-radius: inherit;
+
+  background: var(--rainbow-gradient);
+
+  background-size: 200% 200%;
+
+  opacity: var(--rainbow-border-opacity);
+
+  animation:
+    buttonAddaRainbow
+    var(--rainbow-speed)
+    linear
+    infinite;
+
+  pointer-events: none;
+}
+
+.rainbow-glow {
+  position: absolute;
+
+  inset: -8px;
+
+  z-index: -5;
+
+  border-radius: inherit;
+
+  background: var(--rainbow-gradient);
+
+  filter:
+    blur(var(--rainbow-glow-blur));
+
+  opacity:
+    calc(
+      var(--rainbow-glow-opacity)
+      * var(--rainbow-glow)
+    );
+
+  animation:
+    buttonAddaRainbow
+    var(--rainbow-speed)
+    linear
+    infinite;
+
+  pointer-events: none;
+
+  transition:
+    opacity 300ms ease,
+    filter 300ms ease;
+}
+
+
+.rainbow-button:hover:not(:disabled)
+  .rainbow-glow {
+  opacity:
+    calc(
+      var(--rainbow-glow-hover-opacity)
+      * var(--rainbow-glow)
+    );
+
+  filter:
+    blur(var(--rainbow-glow-hover-blur));
+}
+
+.rainbow-surface {
+  position: absolute;
+
+  inset: 2px;
+
+  z-index: -3;
+
+  border-radius:
+    calc(
+      var(--rainbow-radius) - 2px
+    );
+
+  background:
+    var(--rainbow-background);
+
+  pointer-events: none;
+}
+
+.rainbow-inner {
+  position: absolute;
+
+  inset: 2px;
+
+  z-index: -2;
+
+  border-radius:
+    calc(
+      var(--rainbow-radius) - 2px
+    );
+
+  background: var(--rainbow-gradient);
+
+  opacity: var(--rainbow-inner-opacity);
+
+  filter: blur(6px);
+
+  animation:
+    buttonAddaRainbowReverse
+    var(--rainbow-speed)
+    linear
+    infinite;
+
+  pointer-events: none;
+
+  transition:
+    opacity 300ms ease;
+}
+
+
+.rainbow-button:hover:not(:disabled)
+  .rainbow-inner {
+  opacity:
+    var(--rainbow-inner-hover-opacity);
+}
+
+.rainbow-shine {
+  position: absolute;
+
+  left: -50%;
+  top: 0;
+
+  width: var(--rainbow-shine-width);
+  height: 100%;
+
+  z-index: 5;
+
+  background:
+    var(--rainbow-shine-color);
+
+  opacity: var(--rainbow-shine-opacity);
+
+  filter:
+    blur(var(--rainbow-shine-blur));
+
+  transform:
+    rotate(var(--rainbow-shine-angle));
+
+  pointer-events: none;
+
+  transition:
+    left var(--rainbow-shine-speed) ease;
+}
+
+
+.rainbow-button:hover:not(:disabled)
+  .rainbow-shine {
+  left: var(--rainbow-shine-end);
+}
+
+.rainbow-content {
+  position: relative;
+
+  z-index: 10;
+
+  color: var(--rainbow-text-color);
+
+  text-shadow:
+    var(--rainbow-content-glow);
+
+  white-space: nowrap;
+
+  pointer-events: none;
+}
+
+@keyframes buttonAddaRainbow {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+@keyframes buttonAddaRainbowReverse {
+  0% {
+    transform:
+      rotate(360deg)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      rotate(180deg)
+      scale(1.15);
+  }
+
+  100% {
+    transform:
+      rotate(0deg)
+      scale(1);
+  }
+}
+
+@media (max-width: 480px) {
+  .rainbow-button {
+    max-width: calc(100vw - 30px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rainbow-button *,
+  .rainbow-button {
+    animation: none !important;
+    transition: none !important;
+  }
+}

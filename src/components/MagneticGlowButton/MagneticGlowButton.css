@@ -1,0 +1,199 @@
+.magnetic-glow-button {
+  position: relative;
+  isolation: isolate;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  padding: 0;
+
+  border-style: solid;
+  border-width: var(--border-width);
+
+  outline: none;
+
+  font-family: inherit;
+
+  cursor: pointer;
+
+  transition:
+    transform var(--transition-duration) ease-out,
+    box-shadow 200ms ease,
+    opacity 300ms ease;
+}
+
+.magnetic-glow-button:hover:not(:disabled) {
+
+}
+
+.magnetic-glow-button:active:not(:disabled) {
+  transform:
+    translate3d(0, 0, 0)
+    scale(var(--active-scale));
+}
+
+.magnetic-glow-button:disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.magnetic-cursor-glow {
+  position: absolute;
+
+  z-index: 0;
+
+  width: var(--glow-size);
+  height: var(--glow-size);
+
+  left: var(--glow-x);
+  top: var(--glow-y);
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background:
+    var(--magnetic-color);
+
+  filter:
+    blur(var(--glow-blur));
+
+  opacity: 0;
+
+  transition:
+    opacity 200ms ease;
+
+  pointer-events: none;
+}
+
+.magnetic-glow-button:hover:not(:disabled)
+  .magnetic-cursor-glow {
+  opacity: var(--glow-opacity);
+}
+
+.magnetic-glass {
+  position: absolute;
+
+  inset: 1px;
+
+  z-index: 1;
+
+  border-radius: inherit;
+
+  background:
+    rgb(
+      255 255 255 /
+      var(--glass-opacity)
+    );
+
+  backdrop-filter:
+    blur(var(--glass-blur));
+
+  pointer-events: none;
+}
+
+.magnetic-border-glow {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 2;
+
+  border-radius: inherit;
+
+  opacity: 0;
+
+  box-shadow:
+    inset
+    0 0 var(--border-glow-size)
+    color-mix(
+      in srgb,
+      var(--magnetic-color)
+      calc(var(--border-glow) * 100%),
+      transparent
+    );
+
+  transition:
+    opacity 300ms ease;
+
+  pointer-events: none;
+}
+
+.magnetic-glow-button:hover:not(:disabled)
+  .magnetic-border-glow {
+  opacity: 1;
+}
+
+.magnetic-shine {
+  position: absolute;
+
+  z-index: 3;
+
+  left: -100%;
+  top: 0;
+
+  width: var(--shine-width);
+  height: 100%;
+
+  transform:
+    rotate(var(--shine-angle));
+
+  background:
+    rgb(
+      255 255 255 /
+      var(--shine-opacity)
+    );
+
+  filter: blur(4px);
+
+  transition:
+    left var(--shine-speed) ease;
+
+  pointer-events: none;
+}
+
+.magnetic-glow-button:hover:not(:disabled)
+  .magnetic-shine {
+  left: var(--shine-hover-position);
+}
+
+.magnetic-content {
+  position: relative;
+
+  z-index: 10;
+
+  pointer-events: none;
+
+  transition:
+    filter 200ms ease;
+}
+
+.magnetic-glow-button:hover:not(:disabled)
+  .magnetic-content {
+  filter:
+    drop-shadow(
+      0 0 var(--content-glow)
+      var(--magnetic-color)
+    );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .magnetic-glow-button,
+  .magnetic-cursor-glow,
+  .magnetic-border-glow,
+  .magnetic-shine,
+  .magnetic-content {
+    transition: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .magnetic-glow-button {
+    max-width: 90vw;
+  }
+}

@@ -1,0 +1,273 @@
+.electric-button {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--electric-width);
+  height: var(--electric-height);
+
+  min-height: var(--electric-height);
+
+  padding: 0;
+
+  overflow: hidden;
+
+  border: none;
+  outline: none;
+
+  border-radius:
+    var(--electric-radius);
+
+  background:
+    var(--electric-background);
+
+  color:
+    var(--electric-text-color);
+
+  font-family: inherit;
+
+  font-size:
+    var(--electric-font-size);
+
+  font-weight:
+    var(--electric-font-weight);
+
+  letter-spacing:
+    var(--electric-letter-spacing);
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  isolation: isolate;
+
+  box-sizing: border-box;
+
+  transition:
+    transform
+      var(--electric-transition)
+      ease,
+
+    box-shadow
+      var(--electric-transition)
+      ease,
+
+    opacity
+      var(--electric-transition)
+      ease;
+}
+
+.electric-button:hover:not(:disabled) {
+  transform:
+    translateY(
+      calc(
+        var(--electric-hover-lift) * -1
+      )
+    );
+}
+
+.electric-button:active:not(:disabled) {
+  transform:
+    translateY(0)
+    scale(
+      var(--electric-active-scale)
+    );
+}
+
+.electric-button:disabled,
+.electric-button-disabled {
+  pointer-events: none;
+
+  cursor: not-allowed;
+
+  opacity: 0.5;
+}
+
+.electric-border {
+  position: absolute;
+
+  inset: 0;
+
+  padding:
+    var(--electric-border-width);
+
+  border-radius: inherit;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--electric-color),
+      transparent,
+      var(--electric-color),
+      transparent
+    );
+
+  background-size:
+    300% 100%;
+
+  animation:
+    electricMove
+    var(--electric-border-speed)
+    linear
+    infinite;
+
+  z-index: 1;
+
+  box-sizing: border-box;
+}
+
+.electric-inner {
+  position: absolute;
+
+  inset:
+    var(--electric-border-width);
+
+  border-radius: inherit;
+
+  background:
+    var(--electric-background);
+
+  pointer-events: none;
+
+  z-index: 2;
+}
+
+.electric-glow {
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: inherit;
+
+  background:
+    var(--electric-color);
+
+  opacity:
+    var(--electric-glow-opacity);
+
+  filter:
+    blur(
+      var(--electric-glow-blur)
+    );
+
+  pointer-events: none;
+
+  transition:
+    opacity
+      var(--electric-transition)
+      ease;
+
+  z-index: 0;
+}
+
+.electric-button:hover:not(:disabled)
+  .electric-glow {
+  opacity:
+    var(--electric-hover-glow-opacity);
+}
+
+.electric-streak {
+  position: absolute;
+
+  left:
+    var(--electric-streak-start);
+
+  top: 0;
+
+  width:
+    var(--electric-streak-width);
+
+  height: 100%;
+
+  pointer-events: none;
+
+  transform:
+    rotate(
+      var(--electric-streak-angle)
+    );
+
+  background:
+    var(--electric-streak-color);
+
+  filter:
+    blur(
+      var(--electric-streak-blur)
+    );
+
+  transition:
+    left
+      var(--electric-streak-speed)
+      ease;
+
+  z-index: 3;
+}
+
+.electric-button:hover:not(:disabled)
+  .electric-streak {
+  left:
+    var(--electric-streak-end);
+}
+
+.electric-content {
+  position: relative;
+
+  z-index: 10;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  color:
+    var(--electric-text-color);
+
+  white-space: nowrap;
+
+  pointer-events: none;
+
+  user-select: none;
+}
+
+@keyframes electricMove {
+  0% {
+    background-position:
+      0% 50%;
+  }
+
+  100% {
+    background-position:
+      300% 50%;
+  }
+}
+
+.electric-button:focus-visible {
+  outline:
+    2px solid
+    var(--electric-color);
+
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .electric-button,
+  .electric-button *,
+  .electric-border {
+    animation: none !important;
+
+    transition: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .electric-button {
+    max-width: 90vw;
+  }
+}

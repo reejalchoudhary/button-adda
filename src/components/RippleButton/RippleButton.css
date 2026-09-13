@@ -1,0 +1,159 @@
+.ripple-button {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  border: none;
+  border-radius: var(--ripple-radius);
+
+  background-color:
+    var(--ripple-background);
+
+  color:
+    var(--ripple-text-color);
+
+  box-shadow:
+    var(--ripple-shadow);
+
+  font-family:
+    Inter,
+    system-ui,
+    sans-serif;
+
+  font-size:
+    var(--ripple-font-size);
+
+  font-weight:
+    var(--ripple-font-weight);
+
+  letter-spacing:
+    var(--ripple-letter-spacing);
+
+  cursor: pointer;
+
+  transition:
+    transform var(--ripple-transition) ease,
+    box-shadow var(--ripple-transition) ease,
+    opacity var(--ripple-transition) ease;
+}
+
+.ripple-button:hover:not(:disabled) {
+  transform:
+    translateY(
+      calc(var(--ripple-hover-lift) * -1)
+    );
+}
+
+.ripple-button:active:not(:disabled) {
+  transform:
+    translateY(0)
+    scale(var(--ripple-active-scale));
+}
+
+.ripple-button:disabled {
+  pointer-events: none;
+
+  cursor: not-allowed;
+
+  opacity: 0.5;
+}
+
+.ripple-effect {
+  position: absolute;
+
+  z-index: 2;
+
+  border-radius: 50%;
+
+  background:
+    var(--ripple-color);
+
+  pointer-events: none;
+
+  transform:
+    translate(-50%, -50%)
+    scale(0);
+
+  animation:
+    buttonAddaRipple
+    var(--ripple-duration)
+    ease-out
+    forwards;
+}
+
+@keyframes buttonAddaRipple {
+  0% {
+    transform:
+      translate(-50%, -50%)
+      scale(0);
+
+    opacity: 1;
+  }
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+
+    opacity: 0;
+  }
+}
+
+.ripple-hover-glow {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 3;
+
+  border-radius: inherit;
+
+  background:
+    var(--ripple-hover-color);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition:
+    opacity var(--ripple-transition) ease;
+}
+
+
+.ripple-button:hover:not(:disabled)
+  .ripple-hover-glow {
+  opacity:
+    var(--ripple-hover-opacity);
+}
+
+.ripple-content {
+  position: relative;
+
+  z-index: 10;
+
+  pointer-events: none;
+
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .ripple-button {
+    max-width: calc(100vw - 30px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ripple-button,
+  .ripple-button * {
+    animation: none !important;
+
+    transition: none !important;
+  }
+}

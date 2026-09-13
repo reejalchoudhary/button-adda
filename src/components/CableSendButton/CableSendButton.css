@@ -1,0 +1,663 @@
+.cable-send-button {
+  position: relative;
+
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 340px;
+  height: 76px;
+
+  min-width: 0;
+  min-height: 0;
+
+  box-sizing: border-box;
+
+  border-radius:
+    var(--button-radius);
+
+  background:
+    linear-gradient(
+      135deg,
+      #15151c 0%,
+      #101117 45%,
+      #0b0c11 100%
+    );
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.09);
+
+  box-shadow:
+    0 18px 45px
+      rgba(0, 0, 0, 0.35),
+
+    inset 0 1px
+      rgba(255, 255, 255, 0.06);
+
+  user-select: none;
+
+  touch-action: none;
+
+  isolation: isolate;
+
+  font-family: inherit;
+
+  color:
+    var(--button-text);
+
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.ambient-light {
+  position: absolute;
+
+  width: 170px;
+  height: 170px;
+
+  left: 42%;
+  top: 50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background:
+    var(--accent);
+
+  opacity: 0.04;
+
+  filter: blur(55px);
+
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+
+  pointer-events: none;
+
+  z-index: 0;
+}
+
+
+.cable-send-button:hover
+.ambient-light {
+  opacity: 0.09;
+
+  transform:
+    translate(-50%, -50%)
+    scale(1.3);
+}
+
+
+.cable-send-button.connected
+.ambient-light,
+
+.cable-send-button.sent
+.ambient-light {
+  opacity: 0.18;
+
+  transform:
+    translate(-50%, -50%)
+    scale(1.4);
+}
+
+.cable {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 2;
+
+  pointer-events: none;
+
+  overflow: visible;
+}
+
+
+.cable-shadow {
+  fill: none;
+
+  stroke:
+    rgba(0, 0, 0, 0.65);
+
+  stroke-width: 13;
+
+  stroke-linecap: round;
+}
+
+
+.cable-main {
+  fill: none;
+
+  stroke:
+    var(--cable);
+
+  stroke-width: 8;
+
+  stroke-linecap: round;
+
+  filter:
+    drop-shadow(
+      0 3px 4px
+      rgba(0, 0, 0, 0.45)
+    );
+
+  transition:
+    d 0.08s linear;
+}
+
+
+.energy {
+  fill: none;
+
+  stroke:
+    var(--accent);
+
+  stroke-width: 3;
+
+  stroke-linecap: round;
+
+  stroke-dasharray:
+    5 11;
+
+  animation:
+    energyFlow
+    0.45s
+    linear
+    infinite;
+
+  filter:
+    drop-shadow(
+      0 0 5px
+      var(--accent)
+    );
+}
+
+
+@keyframes energyFlow {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+
+.socket {
+  position: absolute;
+
+  z-index: 4;
+
+  width: 34px;
+  height: 34px;
+
+  transform:
+    translate(-50%, -50%);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+}
+
+
+.socket-ring {
+  width: 31px;
+  height: 31px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      145deg,
+      #282a33,
+      #101117
+    );
+
+  border:
+    1px solid
+    #3a3d47;
+
+  box-shadow:
+    inset 0 2px 4px
+    rgba(255, 255, 255, 0.05);
+
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+.socket-hole {
+  width: 13px;
+  height: 13px;
+
+  border-radius: 50%;
+
+  background:
+    #050609;
+
+  box-shadow:
+    inset 0 2px 4px
+    rgba(0, 0, 0, 0.9);
+}
+
+
+.socket-connected {
+  animation:
+    socketPulse
+    0.55s
+    ease;
+}
+
+
+.socket-connected
+.socket-ring {
+  border-color:
+    var(--accent);
+
+  box-shadow:
+    0 0 12px
+      color-mix(
+        in srgb,
+        var(--accent) 70%,
+        transparent
+      ),
+
+    inset 0 0 8px
+      color-mix(
+        in srgb,
+        var(--accent) 25%,
+        transparent
+      );
+}
+
+
+@keyframes socketPulse {
+  0% {
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+  }
+
+  45% {
+    transform:
+      translate(-50%, -50%)
+      scale(1.35);
+  }
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+  }
+}
+
+.mini-plug {
+  position: absolute;
+
+  z-index: 7;
+
+  width: 43px;
+  height: 28px;
+
+  transform:
+    translate(-50%, -50%);
+
+  cursor: grab;
+
+  touch-action: none;
+
+  transition:
+    transform 0.18s ease;
+}
+
+
+.plug-dragging {
+  cursor: grabbing;
+
+  transform:
+    translate(-50%, -50%)
+    scale(1.12);
+}
+
+
+.plug-handle {
+  position: absolute;
+
+  left: 0;
+  top: 3px;
+
+  width: 29px;
+  height: 22px;
+
+  border-radius:
+    7px 5px 5px 7px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #42454e,
+      #202229
+    );
+
+  border:
+    1px solid
+    #50535d;
+
+  box-shadow:
+    0 5px 9px
+      rgba(0, 0, 0, 0.4),
+
+    inset 0 1px
+      rgba(255, 255, 255, 0.08);
+}
+
+
+.plug-tip {
+  position: absolute;
+
+  left: 27px;
+  top: 7px;
+
+  width: 15px;
+  height: 14px;
+}
+
+
+.plug-tip span {
+  position: absolute;
+
+  width: 10px;
+  height: 4px;
+
+  right: 0;
+
+  border-radius:
+    0 3px 3px 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      #e5e7eb,
+      #858993
+    );
+}
+
+
+.plug-tip span:first-child {
+  top: 0;
+}
+
+
+.plug-tip span:last-child {
+  bottom: 0;
+}
+
+
+.plug-connected {
+  transition:
+    left 0.45s
+      cubic-bezier(
+        0.2,
+        0.9,
+        0.2,
+        1
+      ),
+
+    top 0.45s
+      cubic-bezier(
+        0.2,
+        0.9,
+        0.2,
+        1
+      );
+}
+
+.button-content {
+  position: relative;
+
+  z-index: 10;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 11px;
+
+  max-width: calc(100% - 100px);
+
+  color:
+    var(--button-text);
+
+  font-size: 16px;
+
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  letter-spacing: -0.01em;
+
+  pointer-events: none;
+
+  white-space: nowrap;
+
+  transition:
+    transform 0.25s ease;
+}
+
+
+.message-icon {
+  width: 32px;
+  height: 32px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background:
+    rgba(255, 255, 255, 0.06);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.08);
+
+  color:
+    color-mix(
+      in srgb,
+      var(--accent) 75%,
+      white
+    );
+
+  font-size: 14px;
+
+  transition:
+    background 0.35s ease,
+    color 0.35s ease,
+    transform 0.35s ease;
+}
+
+
+.cable-send-button:hover
+.message-icon {
+  transform:
+    translateX(2px);
+
+  background:
+    color-mix(
+      in srgb,
+      var(--accent) 12%,
+      transparent
+    );
+
+  color:
+    var(--accent);
+}
+
+
+.cable-send-button.sent
+.message-icon {
+  background:
+    color-mix(
+      in srgb,
+      var(--accent) 18%,
+      transparent
+    );
+
+  color:
+    var(--accent);
+
+  transform:
+    scale(1.1);
+}
+
+.drag-hint {
+  position: absolute;
+
+  bottom: 7px;
+  right: 22px;
+
+  color:
+    #5f626b;
+
+  font-size: 8px;
+
+  line-height: 1;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+
+  opacity: 0.7;
+
+  pointer-events: none;
+
+  z-index: 11;
+}
+
+.cable-send-button.dragging {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--accent) 40%,
+      transparent
+    );
+
+  box-shadow:
+    0 18px 45px
+      rgba(0, 0, 0, 0.35),
+
+    0 0 25px
+      color-mix(
+        in srgb,
+        var(--accent) 12%,
+        transparent
+      ),
+
+    inset 0 1px
+      rgba(255, 255, 255, 0.07);
+}
+
+.cable-send-button.sent {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--accent) 45%,
+      transparent
+    );
+
+  animation:
+    sentPop
+    0.5s
+    ease;
+}
+
+
+@keyframes sentPop {
+  0% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(0.97);
+  }
+
+  75% {
+    transform: scale(1.015);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.cable-send-button:focus-visible {
+  outline:
+    2px solid
+    var(--accent);
+
+  outline-offset: 4px;
+}
+
+.cable-send-button.disabled {
+  opacity: 0.45;
+
+  cursor: not-allowed;
+
+  pointer-events: none;
+}
+
+@media (max-width: 480px) {
+  .cable-send-button {
+    max-width: 94vw;
+  }
+
+  .button-content {
+    gap: 8px;
+
+    font-size: 14px;
+
+    max-width: calc(100% - 80px);
+  }
+
+  .message-icon {
+    width: 28px;
+    height: 28px;
+
+    border-radius: 8px;
+  }
+
+  .drag-hint {
+    right: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cable-send-button,
+  .cable-send-button *,
+  .energy {
+    animation: none !important;
+
+    transition: none !important;
+  }
+}

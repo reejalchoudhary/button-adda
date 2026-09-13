@@ -1,0 +1,132 @@
+.gradient-button {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+
+  overflow: hidden;
+
+  cursor: pointer;
+
+  font-size: var(--gradient-font-size);
+  font-weight: var(--gradient-font-weight);
+
+  background:
+    linear-gradient(
+      var(--gradient-angle),
+      var(--gradient-color),
+      var(--gradient-secondary),
+      var(--gradient-third),
+      var(--gradient-color)
+    );
+
+  background-size: var(--gradient-size);
+
+  box-shadow:
+    0 8px 30px var(--gradient-shadow);
+
+  animation:
+    buttonAddaGradient
+    var(--gradient-animation-duration)
+    var(--gradient-animation-timing)
+    var(--gradient-animation-iteration);
+
+  transition:
+    transform 300ms ease;
+}
+
+.gradient-button__shine {
+  position: absolute;
+
+  inset: 0;
+
+  left: calc(
+    var(--gradient-shine-width) * -1
+  );
+
+  width: var(--gradient-shine-width);
+
+  transform:
+    translateX(-100%)
+    skewX(12deg);
+
+  background:
+    linear-gradient(
+      to right,
+      transparent,
+      rgba(
+        255,
+        255,
+        255,
+        var(--gradient-shine-opacity)
+      ),
+      transparent
+    );
+
+  pointer-events: none;
+
+  transition:
+    transform var(--gradient-shine-speed) ease;
+}
+
+
+.gradient-button:hover:not(:disabled)
+.gradient-button__shine {
+  transform:
+    translateX(500%)
+    skewX(12deg);
+}
+
+.gradient-button__content {
+  position: relative;
+
+  z-index: 10;
+}
+
+.gradient-button:hover:not(:disabled) {
+  transform:
+    translateY(
+      calc(var(--gradient-hover-lift) * -1)
+    );
+}
+
+.gradient-button:active:not(:disabled) {
+  transform:
+    translateY(0)
+    scale(var(--gradient-active-scale));
+}
+
+.gradient-button:disabled {
+  pointer-events: none;
+
+  cursor: not-allowed;
+
+  opacity: 0.5;
+}
+
+@keyframes buttonAddaGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient-button,
+  .gradient-button * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

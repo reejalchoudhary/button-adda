@@ -1,0 +1,382 @@
+.progress-button {
+  position: relative;
+  isolation: isolate;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--progress-width);
+  height: var(--progress-height);
+
+  padding: 0;
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+
+  border:
+    var(--progress-border-width)
+    solid
+    var(--progress-border-color);
+
+  border-radius:
+    var(--progress-radius);
+
+  background:
+    var(--progress-background);
+
+  color:
+    var(--progress-text-color);
+
+  font-size:
+    var(--progress-font-size);
+
+  font-weight:
+    var(--progress-font-weight);
+
+  letter-spacing:
+    var(--progress-letter-spacing);
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 30px
+    color-mix(
+      in srgb,
+      var(--progress-color) 20%,
+      transparent
+    );
+
+  transition:
+    transform 300ms ease,
+    border-color 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.progress-fill {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  width:
+    var(--progress-value);
+
+  max-width: 100%;
+
+  z-index: 1;
+
+  border-radius:
+    inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--progress-start),
+      var(--progress-end)
+    );
+
+  transform-origin: left center;
+
+  transition:
+    width
+    var(--progress-duration)
+    var(--progress-easing);
+
+  pointer-events: none;
+}
+
+.progress-fill-glow {
+  position: absolute;
+
+  left: 0;
+  top: -8px;
+  bottom: -8px;
+
+  width:
+    var(--progress-value);
+
+  max-width: 100%;
+
+  z-index: 2;
+
+  border-radius:
+    inherit;
+
+  background:
+    var(--progress-glow-color);
+
+  opacity:
+    var(--progress-glow-opacity);
+
+  filter:
+    blur(var(--progress-glow-blur));
+
+  transition:
+    width
+    var(--progress-duration)
+    var(--progress-easing);
+
+  pointer-events: none;
+}
+
+.progress-shine {
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+
+  left: -50%;
+
+  width:
+    var(--progress-shine-width);
+
+  z-index: 3;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.8),
+      transparent
+    );
+
+  opacity:
+    var(--progress-shine-opacity);
+
+  transform:
+    skewX(-18deg);
+
+  pointer-events: none;
+
+  animation:
+    progress-shine-move
+    var(--progress-shine-speed)
+    linear
+    infinite;
+}
+
+
+@keyframes progress-shine-move {
+
+  from {
+    left: -50%;
+  }
+
+  to {
+    left: 120%;
+  }
+}
+
+.progress-hover-overlay {
+  position: absolute;
+  inset: 0;
+
+  z-index: 5;
+
+  border-radius: inherit;
+
+  background:
+    rgba(255,255,255,.1);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition:
+    opacity 300ms ease;
+}
+
+
+.progress-button:hover:not(:disabled)
+  .progress-hover-overlay {
+  opacity:
+    var(--progress-hover-overlay-opacity);
+}
+
+.progress-content {
+  position: relative;
+
+  z-index: 10;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  white-space: nowrap;
+
+  text-shadow:
+    0 1px 2px rgba(0,0,0,.25);
+}
+
+.progress-percentage {
+  font-size:
+    var(--progress-percentage-size);
+
+  opacity:
+    var(--progress-percentage-opacity);
+
+  font-variant-numeric:
+    tabular-nums;
+}
+
+.progress-complete-content {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  animation:
+    progress-complete-enter
+    var(--progress-complete-duration)
+    cubic-bezier(
+      .22,
+      1,
+      .36,
+      1
+    );
+}
+
+
+.progress-complete-icon {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 22px;
+  height: 22px;
+
+  border-radius: 50%;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--progress-complete-color) 30%,
+      transparent
+    );
+
+  color:
+    var(--progress-complete-color);
+
+  font-size: 14px;
+
+  font-weight: 900;
+}
+
+
+@keyframes progress-complete-enter {
+
+  0% {
+    opacity: 0;
+
+    transform:
+      scale(.65)
+      translateY(4px);
+  }
+
+  65% {
+    opacity: 1;
+
+    transform:
+      scale(
+        var(--progress-complete-scale)
+      )
+      translateY(0);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform:
+      scale(1);
+  }
+}
+
+.progress-button:hover:not(:disabled) {
+  transform:
+    translateY(
+      calc(
+        var(--progress-hover-lift)
+        * -1
+      )
+    );
+
+  border-color:
+    var(--progress-hover-border-color);
+
+  box-shadow:
+    0 14px 35px
+      rgba(0,0,0,.25),
+
+    0 0
+      var(--progress-hover-glow-size)
+      color-mix(
+        in srgb,
+        var(--progress-color)
+        calc(
+          var(
+            --progress-hover-glow-opacity
+          ) * 100%
+        ),
+        transparent
+      );
+}
+
+.progress-button.progress-complete {
+  box-shadow:
+    0 10px 35px
+      color-mix(
+        in srgb,
+        var(--progress-complete-color)
+        25%,
+        transparent
+      );
+}
+
+.progress-button:active:not(:disabled) {
+  transform:
+    translateY(0)
+    scale(
+      var(--progress-active-scale)
+    );
+}
+
+.progress-button:disabled {
+  cursor: not-allowed;
+
+  pointer-events: none;
+
+  opacity: .7;
+}
+
+@media (max-width: 480px) {
+  .progress-button {
+    max-width: 90vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .progress-button,
+  .progress-fill,
+  .progress-fill-glow,
+  .progress-hover-overlay {
+    transition: none !important;
+  }
+
+  .progress-shine {
+    animation: none !important;
+  }
+
+  .progress-complete-content {
+    animation: none !important;
+  }
+}
