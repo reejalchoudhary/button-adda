@@ -1,6 +1,6 @@
 {
   "name": "button-adda",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Beautiful animated and interactive React buttons.",
   "type": "module",
   "private": false,
