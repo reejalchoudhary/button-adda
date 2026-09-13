@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./public/logoo.png" height="95"/>
+<img src="https://github.com/reejalchoudhary/site-buttonadda/blob/main/public/logoo.png?raw=true" height="95"/>
 
 # ButtonAdda
 
@@ -362,7 +362,7 @@ Fork the ButtonAdda repository on GitHub.
 ### 2️⃣ Clone Your Fork
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/buttonadda.git
+git clone https://github.com/reejalchoudhary/button-adda.git
 ```
 
 ### 3️⃣ Create a New Branch
@@ -473,7 +473,7 @@ See the [LICENSE](LICENSE) file for details.
 
 <div align="center">
 
-# <img src="./public/logoo.png" height="40" width="50"> BUTTON ADDA
+# <img src="https://github.com/reejalchoudhary/site-buttonadda/blob/main/public/logoo.png?raw=true" height="40" width="50"> BUTTON ADDA
 
 ### Buttons that do more.
 
